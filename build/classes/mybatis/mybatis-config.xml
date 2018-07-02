@@ -69,6 +69,7 @@
 		<mapper resource="sqlmapper/framework/code-mapper.xml"/>
 		<mapper resource="sqlmapper/main/main-mapper.xml"/>
 		<mapper resource="sqlmapper/test/test-mapper.xml"/>
+		<mapper resource="sqlmapper/board/board-mapper.xml"/>
 	</mappers>
 
 </configuration>
