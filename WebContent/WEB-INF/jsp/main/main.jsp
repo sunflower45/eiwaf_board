@@ -13,7 +13,8 @@
 <c:choose>
 <c:when test="${msg == 'success'}"> 
 	아이디 : ${memberId}<br>
-	닉네임 : ${memberName}
+	닉네임 : ${memberName}<br>
+	<a href="${path}/board/list.do">게시판 리스트</a>
 </c:when>
 <c:otherwise>
 아이디 : <input name="memberId" id="memberId" placeholder="아이디를 입력해 주세요">

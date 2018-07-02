@@ -33,7 +33,7 @@ public class MemberController extends PublicController {
 		
 		if(name != null) {
 			MemberVO vo2 = memberService.viewMember(vo);
-			mav.setViewName("main/home");
+			mav.setViewName("main/main");
 			mav.addObject("msg", "success");
 			mav.addObject("memberId", vo2.getMemberId());
 			mav.addObject("memberName", vo2.getMemberName());
