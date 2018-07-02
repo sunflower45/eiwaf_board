@@ -9,8 +9,7 @@
 <script type="text/javascript" src="//code.jquery.com/jquery-2.2.4.min.js"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
-	alert("hi");
-
+	
 	$(document).ready(function(){
 		$("#btnDelete").click(function(){
 			if(confirm("삭제하시겠습니까?")){
@@ -19,26 +18,7 @@
 			}
 		});
 		$("#btnUpdate").click(function(){
-			var title = $("#boardTitle").val();
-			var content = $("#boardContent").val();
-			var writer = $("#boardWriter").val();
-			if(title == ""){
-				alert("제목을 입력하세요");
-				document.form1.title.focus();
-				return;
-			}
-			if(content == ""){
-				alert("내용을 입력하세요");
-				document.form1.content.focus();
-				return;
-			}
-			if(writer=""){
-				alert("이름을 입력하세요");
-				document.form1.wirter.focus();
-				return;
-			}
-			document.form.action = "${path}/board/update.do";
-			document.form1.submit();
+			location.href = "${path}/board/modify.do?boardBno=${dto.boardBno}";
 				
 		})
 	})
@@ -54,18 +34,13 @@
 		조회수 : ${dto.boardViewcnt}
 	</div>
 	<div>
-		제목
-		<input name="boardTitle" id="boardTitle" size="80" value="${dto.boardTitle}" placeholder="제목을 입력해주세요">
+		제목 : ${dto.boardTitle}
 	</div>
 	<div>
-		내용
-		<textarea name="boardContent" id="boardContent" rows="4" cols="80" placeholder="내용을 입력해 주세요">
-			${dto.boardContent }
-		</textarea>
+		내용 : ${dto.boardContent}
 	</div>
 	<div>
-		이름
-		<input name="boardWriter" id="boardWriter" value="${dto.boardWirter}" placeholder="이름을 입력해주세요">
+		이름 : ${dto.boardWriter}
 	</div>
 	<div>
 		<input type="hidden" name="boardBno" value="${dto.boardBno}">

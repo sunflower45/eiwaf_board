@@ -1,6 +1,5 @@
 package net.e4net.s1.board.vo;
 
-import java.util.Date;
 
 import lombok.Data;
 

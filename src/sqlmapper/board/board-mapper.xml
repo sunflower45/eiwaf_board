@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="board">
+<mapper namespace="BoardService">
 	<select id="listAll" resultType="net.e4net.s1.board.vo.BoardVO">
 		SELECT board_bno as boardBno,
 			   board_title as boardTitle,
@@ -13,11 +13,17 @@
 		ORDER BY boardBno DESC, boardRegdate DESC
 	</select>
 	<insert id="insert">
-		INSERT INTO tbl_board(board_bno, board_title, board_content, boar_writer)
-		VALUES((SELECT NVL(MAX(board_bno)+1), 1) FROM tbl_board), #{boardTitle}, #{boardWriter})
+		INSERT INTO tbl_board(board_bno, board_title, board_content, board_writer)
+		VALUES(BOARD_NUM.NEXTVAL, #{boardTitle},#{boardContent}, #{boardWriter})
 	</insert>
 	<select id="view" resultType="net.e4net.s1.board.vo.BoardVO">
-		SELECT * FROM tbl_board
+		SELECT BOARD_BNO as boardBno
+				, BOARD_TITLE as boardTitle
+				, BOARD_CONTENT as boardContent
+				, BOARD_WRITER as boardWriter
+				, BOARD_REGDATE as boardRegdate
+				, BOARD_VIEWCNT  as boardViewcnt
+		FROM tbl_board
 		WHERE board_bno = #{boardBno}
 	</select>
 	<update id="increaseViewcnt">
@@ -25,7 +31,7 @@
 		WHERE board_bno = #{boardBno}
 	</update>
 	<update id="updateArticle">
-		UPDATE tbl_board SET board_title = #{boardTitle}, board_content = #{boardContent}, board_wirter=#{boardWriter}
+		UPDATE tbl_board SET board_title = #{boardTitle}, board_content = #{boardContent}, board_writer=#{boardWriter}
 		WHERE board_bno = #{boardBno}
 	</update>
 	<delete id="deleteArticle">

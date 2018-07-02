@@ -70,6 +70,7 @@
 		<mapper resource="sqlmapper/main/main-mapper.xml"/>
 		<mapper resource="sqlmapper/test/test-mapper.xml"/>
 		<mapper resource="sqlmapper/board/board-mapper.xml"/>
+		<mapper resource="sqlmapper/board/member-mapper.xml"/>
 	</mappers>
 
 </configuration>
