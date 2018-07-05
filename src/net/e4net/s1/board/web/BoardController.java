@@ -33,10 +33,14 @@ public class BoardController extends PublicController {
 	
     @RequestMapping("/list.do")
 	public ModelAndView list(HttpServletRequest request,RequestContext requestContext) throws Exception {
+    	HttpSession session = request.getSession();
+    	String memberName = (String) session.getAttribute("memberName");
+    	
     	List<BoardVO> list = boardService.listAll();
     	ModelAndView mav = new ModelAndView();
 		mav.setViewName("board/list");
 		mav.addObject("list", list);
+		mav.addObject("memberName", memberName);
 		Status status = WebUtil.getAttributeStatus(request);
 		if (status.isOk()) {
 			return getOkModelAndView(mav, status);

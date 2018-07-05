@@ -6,7 +6,6 @@ public class MemberVO {
     private String memberName; 
     private String memberEmail; 
     private String memberRegdate; // java.sql.Date
-    private String memberUpdatedate;
     
     public String getMemberId() {
         return memberId;
@@ -38,15 +37,9 @@ public class MemberVO {
     public void setMemberRegdate(String memberRegdate) {
         this.memberRegdate = memberRegdate;
     }
-    public String getMemberUpdatedate() {
-        return memberUpdatedate;
-    }
-    public void setMemberUpdatedate(String memberUpdatedate) {
-        this.memberUpdatedate = memberUpdatedate;
-    }
     @Override
     public String toString() {
         return "MemberVO [memberId=" + memberId + ", memberPw=" + memberPw + ", memberName=" + memberName + ", memberEmail="
-                + memberEmail + ", memberRegdate=" + memberRegdate + ", memberUpdatedate=" + memberUpdatedate + "]";
+                + memberEmail + ", memberRegdate=" + memberRegdate  + "]";
     }
 }

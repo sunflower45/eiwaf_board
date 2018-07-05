@@ -14,4 +14,18 @@
 		FROM tbl_member
 		WHERE member_id = #{memberId} AND member_pw = #{memberPw}
 	</select>
+	<insert id="joinMember">
+		INSERT INTO tbl_member(member_name, member_id, member_pw, member_email)
+		VALUES(#{memberName}, #{memberId}, #{memberPw}, #{memberEmail})
+	</insert>
+	<select id="findId" resultType="String" >
+		SELECT  member_id as memberId
+		FROM tbl_member
+		WHERE member_name = #{memberName, jdbcType=VARCHAR} AND member_email = #{memberEmail, jdbcType=VARCHAR}
+	</select>
+	<select id="findPw" resultType="String" >
+		SELECT  member_pw as memberPw
+		FROM tbl_member
+		WHERE member_name = #{memberName} AND member_id = #{memberId}
+	</select>
 </mapper>

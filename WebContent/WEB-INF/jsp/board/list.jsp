@@ -19,6 +19,8 @@
 </script>
 </head>
 <body>
+<jsp:include page="../main/menu.jsp" ></jsp:include>
+	<h2>${sessionScope.memberId} 님 안녕하세요</h2>
 	<h2>게시글 목록</h2>
 	<button type="button" id="btnWrite">글쓰기</button>
 	<table border="1" width="600px">
