@@ -33,8 +33,8 @@ public class MemberController extends PublicController {
 	MemberService memberService;
 	
 	@RequestMapping(value="test.do")
-	public ModelAndView test(@RequestBody String id, HttpServletRequest request) throws Exception {
-		System.out.println("********controller 1*********");
+	public ModelAndView test(HttpServletRequest request) throws Exception {
+		System.out.println("***********controller 1 **********");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("board/test");
 		Status status = WebUtil.getAttributeStatus(request);
@@ -47,14 +47,10 @@ public class MemberController extends PublicController {
 	
 	@RequestMapping(value="ajax.do", method=RequestMethod.POST)
 	public ModelAndView ajax(HttpServletRequest request) throws Exception {
-		System.out.println("******controller 2*******");
-//		ResponseEntity<String> entity = null;
+		System.out.println("**********controller 2***********");
 		String msg = request.getParameter("id");
-//		entity = new ResponseEntity<String>(msg, HttpStatus.OK);
-//		return entity;
-		
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("id", msg);
+		mav.addObject("id", msg+"is your id");
 		mav.setViewName("jsonView");
 		Status status = WebUtil.getAttributeStatus(request);
 		if (status.isOk()) {
@@ -65,8 +61,9 @@ public class MemberController extends PublicController {
 	}
 	@RequestMapping("find.do")
 	public ModelAndView find(HttpServletRequest request) throws Exception{
+		System.out.println("********controller 1*********");
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("/board/find");
+		mav.setViewName("board/find");
 		Status status = WebUtil.getAttributeStatus(request);
 		if (status.isOk()) {
 			return getOkModelAndView(mav, status);
@@ -75,21 +72,27 @@ public class MemberController extends PublicController {
 		}
 	}
 	
-	@ResponseBody
 	@RequestMapping(value="findId.do", method=RequestMethod.POST)
-	public ModelAndView findId(@RequestBody MemberVO vo, HttpServletResponse response, HttpServletRequest request)throws Exception {
-		System.out.println("******controller in **********");
+	public ModelAndView findId(HttpServletRequest request)throws Exception {
+		System.out.println("******controller 2 **********");
+		String email = request.getParameter("memberEmail");
+		String name = request.getParameter("memberName");
+		System.out.println("email : "+email+" name : "+name);
+		MemberVO vo = new MemberVO();
+		vo.setMemberEmail(email);
+		vo.setMemberName(name);
 		String idList = memberService.findId(vo); 
 		System.out.println("idList : "+idList);
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("board/find");
+		mav.setViewName("jsonView");
 		mav.addObject("memberId", idList);
 		Status status = WebUtil.getAttributeStatus(request);
 		if (status.isOk()) {
 			return getOkModelAndView(mav, status);
 		} else {
 			return getFailModelAndView(mav, status);
-		}	}
+		}	
+	}
 	
 	@RequestMapping(value="findPw.do", method=RequestMethod.POST)
 	public ModelAndView findPw(@ModelAttribute MemberVO vo, HttpServletRequest request) throws Exception {

@@ -11,20 +11,17 @@
 <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 <script>
 $(document).on('click','#findId',function(){
-	var name = $('#memberName').val();
-	var email = $('#memberEmail').val();
- 	var postData = {memberName : name ,  memberEmail : email};
- 	console.log(postData);
-	$.ajaxSettings.traditional = true;
+	var memberName = $('#memberName').val();
+	var memberEmail = $('#memberEmail').val();
 	$.ajax({
         url:'http://localhost:8080/member/findId.do',
-        type:'POST',
-        data: JSON.stringify(postData),
-        contextType : 'application/json',
+        method:'POST',
+        type:'text',
+        data: {memberName : memberName ,  memberEmail : memberEmail},
         success:function(data){
         	alert("ajax 완료");
-        	var memberId = data.memberId;
-       	 	$("#idList").append("<h1>"+"회원님의 정보로 등록된 아이디는 : "+memberId+" 입니다.</h1>");
+        	console.log(data);
+        	$("#idList").append("<h1>"+"회원님의 정보로 등록된 아이디는 : "+data.memberId+" 입니다.</h1>");
 
         },
         error: function (request,status,error){
@@ -32,6 +29,8 @@ $(document).on('click','#findId',function(){
 
         }
     });
+	$("#memberName").val("");
+	$("#memberEmail").val("");
 });
 
 </script>
@@ -46,10 +45,12 @@ $(document).on('click','#findId',function(){
 	<label for="text">이메일 : </label>
 	<input type="text" id="memberEmail">
 	
-	<button id="findId" type="submit">아이디 찾기</button><br><br>
+	<br>
+	<input type="button" id="findId" value="아이디 찾기">
+	<br><br>
 </form>
 
-<span id="idList"></span>
+<ul id="idList"></ul>
 
 </body>
 </html>
