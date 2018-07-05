@@ -7,12 +7,11 @@
 <title>회원가입</title>
 
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-<script src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
-<script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
 <script type="text/javascript">
 
+
 $(document).ready(function () {
-    //[1] lblError 레이어 클리어
+	//[1] lblError 레이어 클리어
     $('#memberPw').keyup(function () {
         // $('#lblError').remove(); // 제거
         $('#lblError').text(''); // 클리어
@@ -28,16 +27,41 @@ $(document).ready(function () {
             $('#lblError').html("<b>암호가 맞습니다.</b>"); // 레이어에 텍스트 출력
         }
     });
+
+});
+$(document).on('click', '#idCheck', function(){
+    	var memberId = $("#memberId").val();
+    	$.ajax({
+    		method : 'POST',
+    		data : {memberId : memberId},
+    		type : 'text',
+    		url : 'http://localhost:8080/member/idCheck.do',
+    		success : function(data){
+    			if(data.cnt == "1"){
+    				alert("아이디가 존재합니다. 다른 아이디를 입력해주세요.");
+    				$("#memberId").focus();
+    			} else {
+    				alert("사용 가능한 아이디입니다.");
+    				$("#memberPw").focus();
+    			} 
+    		},
+    		error : function(request,status,error){
+    			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    		}
+    	})
 });
 </script>
 </head>
 <body>
 <h1>회원가입 페이지</h1>
-<form action="/member/joinUpdate.do" method="post">
+  <form id="form1" action="${path}/member/joinUpdate.do" method="post">
 	<table>
 		<tr>
+			
 			<td>아이디</td>
-			<td><input type="text" name="memberId"></td>
+			<td><input type="text" id="memberId" name="memberId"></td>
+			<td id="exist"></td>
+			<td><button id="idCheck" type="button">아이디 중복 검사</button></td>
 		</tr>
 		<tr>
 			<td>비밀번호</td>
@@ -57,15 +81,15 @@ $(document).ready(function () {
 		</tr>
 		<tr>
 			<td>이름</td>
-			<td><input type="text" name="memberName"></td>
+			<td><input type="text" id="memberName" name="memberName"></td>
 		</tr>
 		<tr>
 			<td>이메일</td>
-			<td><input type="text" name="memberEmail"></td>
+			<td><input type="text" name="memberEmail" id="memberEmail"></td>
 		</tr>
 		
 		<tr>
-			<td colspan="2" align="center"><input type="submit" value="가입하기"><input type="reset" value="다시작성"></td>
+			<td colspan="2" align="center"><button type="submit" id="submitBtn" >가입하기</button><input type="reset" value="다시작성"></td>
 		</tr>
 	</table>
 	

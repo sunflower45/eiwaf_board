@@ -9,8 +9,15 @@
 			   board_writer as boardWriter,
 			   board_regdate as boardRegdate,
 			   board_viewcnt as boardViewcnt
-		FROM tbl_board
-		ORDER BY boardBno DESC, boardRegdate DESC
+   		FROM tbl_board
+    	<!-- WHERE절을 include 태그로 삽입 -->
+    	<include refid="search"></include>
+    	ORDER BY board_bno desc, board_regdate desc
+	</select>
+	<select id="countArticle" resultType="int">
+    	SELECT COUNT(*) FROM tbl_board
+    	<!-- WHERE절을 include 태그로 삽입 -->
+   	 	<include refid="search"></include>
 	</select>
 	<insert id="insert">
 		INSERT INTO tbl_board(board_bno, board_title, board_content, board_writer)
@@ -38,4 +45,19 @@
 		DELETE FROM tbl_board
 		WHERE board_bno = #{boardBno}
 	</delete>
+	<sql id="search">
+    <choose>
+        <!-- 검색옵션이 전체 검색일 경우 -->
+        <when test="searchOption == 'all'">
+            WHERE board_content like '%'||#{keyword}||'%'
+            OR board_title like '%'||#{keyword}||'%'
+        </when>
+        <!-- 전체 검색이 아닐 경우 -->
+        <otherwise>
+            WHERE ${searchOption} like '%'||#{keyword}||'%'
+        </otherwise>
+    </choose>
+</sql>
+ 
+
 </mapper>

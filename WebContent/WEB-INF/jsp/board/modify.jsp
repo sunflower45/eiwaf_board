@@ -18,9 +18,6 @@
 			}
 		});
 		$("#btnUpdete").click(function(){
-            //var title = document.form1.title.value; ==> name속성으로 처리할 경우
-            //var content = document.form1.content.value;
-            //var writer = document.form1.writer.value;
             alert("수정되었습니다.");
             var title = $("#boardTitle").val();
             var content = $("#boardContent").val();

@@ -7,14 +7,10 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import net.e4net.eiwaf.common.Status;
@@ -32,36 +28,24 @@ public class MemberController extends PublicController {
 	@Autowired
 	MemberService memberService;
 	
-	@RequestMapping(value="test.do")
-	public ModelAndView test(HttpServletRequest request) throws Exception {
-		System.out.println("***********controller 1 **********");
+	@RequestMapping(value="idCheck.do", method=RequestMethod.POST)
+	public ModelAndView idCheck(HttpServletRequest request) throws Exception {
+		String id = request.getParameter("memberId");
+		MemberVO vo = new MemberVO();
+		vo.setMemberId(id);
+		String idList = memberService.idCheck(vo);
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("board/test");
-		Status status = WebUtil.getAttributeStatus(request);
-		if (status.isOk()) {
-			return getOkModelAndView(mav, status);
-		} else {
-			return getFailModelAndView(mav, status);
-		}
-	}
-	
-	@RequestMapping(value="ajax.do", method=RequestMethod.POST)
-	public ModelAndView ajax(HttpServletRequest request) throws Exception {
-		System.out.println("**********controller 2***********");
-		String msg = request.getParameter("id");
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("id", msg+"is your id");
 		mav.setViewName("jsonView");
+		mav.addObject("cnt", idList);
 		Status status = WebUtil.getAttributeStatus(request);
 		if (status.isOk()) {
 			return getOkModelAndView(mav, status);
 		} else {
 			return getFailModelAndView(mav, status);
-		}
+		}	
 	}
 	@RequestMapping("find.do")
 	public ModelAndView find(HttpServletRequest request) throws Exception{
-		System.out.println("********controller 1*********");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("board/find");
 		Status status = WebUtil.getAttributeStatus(request);
@@ -74,15 +58,12 @@ public class MemberController extends PublicController {
 	
 	@RequestMapping(value="findId.do", method=RequestMethod.POST)
 	public ModelAndView findId(HttpServletRequest request)throws Exception {
-		System.out.println("******controller 2 **********");
 		String email = request.getParameter("memberEmail");
 		String name = request.getParameter("memberName");
-		System.out.println("email : "+email+" name : "+name);
 		MemberVO vo = new MemberVO();
 		vo.setMemberEmail(email);
 		vo.setMemberName(name);
 		String idList = memberService.findId(vo); 
-		System.out.println("idList : "+idList);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("jsonView");
 		mav.addObject("memberId", idList);
@@ -93,19 +74,17 @@ public class MemberController extends PublicController {
 			return getFailModelAndView(mav, status);
 		}	
 	}
-	
 	@RequestMapping(value="findPw.do", method=RequestMethod.POST)
-	public ModelAndView findPw(@ModelAttribute MemberVO vo, HttpServletRequest request) throws Exception {
+	public ModelAndView findPw(HttpServletRequest request) throws Exception{
+		String name = request.getParameter("memberName");
+		String id = request.getParameter("memberId");
+		MemberVO vo = new MemberVO();
+		vo.setMemberId(id);
+		vo.setMemberName(name);
 		String pwList = memberService.findPw(vo);
 		ModelAndView mav = new ModelAndView();
-		if(pwList != null) {
-			mav.setViewName("board/find");
-			mav.addObject("memberPw", pwList);
-			
-		} else {
-			mav.setViewName("board/find");
-			mav.addObject("memberPw", null);
-		}
+		mav.setViewName("jsonView");
+		mav.addObject("memberPw", pwList);
 		Status status = WebUtil.getAttributeStatus(request);
 		if (status.isOk()) {
 			return getOkModelAndView(mav, status);

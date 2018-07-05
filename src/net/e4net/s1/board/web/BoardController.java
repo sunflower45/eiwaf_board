@@ -1,13 +1,14 @@
 package net.e4net.s1.board.web;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import net.e4net.eiwaf.common.Status;
-import net.e4net.eiwaf.web.RequestContext;
-import net.e4net.eiwaf.web.handler.WebHandlerUtil;
 import net.e4net.eiwaf.web.util.WebUtil;
 import net.e4net.s1.board.service.BoardService;
 import net.e4net.s1.board.vo.BoardVO;
@@ -32,14 +31,22 @@ public class BoardController extends PublicController {
 	
 	
     @RequestMapping("/list.do")
-	public ModelAndView list(HttpServletRequest request,RequestContext requestContext) throws Exception {
+	public ModelAndView list(@RequestParam(defaultValue="board_title") String searchOption,
+			@RequestParam(defaultValue="") String keyword,  
+			HttpServletRequest request) throws Exception {
     	HttpSession session = request.getSession();
     	String memberName = (String) session.getAttribute("memberName");
     	
-    	List<BoardVO> list = boardService.listAll();
+    	List<BoardVO> list = boardService.listAll(searchOption, keyword);
+    	int count = boardService.countArticle(searchOption, keyword);
+    	Map<String, Object> map = new HashMap<String, Object>();
+    	map.put("list", list);
+    	map.put("count", count);
+    	map.put("searchOption", searchOption);
+    	map.put("keyword", keyword);
     	ModelAndView mav = new ModelAndView();
 		mav.setViewName("board/list");
-		mav.addObject("list", list);
+		mav.addObject("map", map);
 		mav.addObject("memberName", memberName);
 		Status status = WebUtil.getAttributeStatus(request);
 		if (status.isOk()) {

@@ -28,4 +28,9 @@
 		FROM tbl_member
 		WHERE member_name = #{memberName} AND member_id = #{memberId}
 	</select>
+	<select id="idCheck" resultType="String">
+		SELECT count(*)
+		FROM tbl_member
+		WHERE member_id = #{memberId}
+	</select>
 </mapper>

@@ -30,7 +30,11 @@
 				return;
 			}
 			document.form1.submit();
-		})
+		});
+		$("#toList").click(function(){
+            location.href = "${path}/board/list.do";
+
+		});
 	})
 </script>
 </head>
@@ -47,11 +51,12 @@
 	</div>
 	<div>
 		이름
-		<input name="boardWriter" id="boardWriter" placeholder="이름을 입력해주세요">
+		<input name="boardWriter" id="boardWriter" value="${sessionScope.memberName}">
 	</div>
 	<div style="width:650px; text-align:center;">
 		<button type="button" id="btnSave">확인</button>
 		<button type="reset">취소</button>
+		<button type="button" id="toList">목록으로</button>
 	</div>
 </form>
 </body>
