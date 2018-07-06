@@ -6,8 +6,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>게시글 목록</title>
-<script type="text/javascript" src="//code.jquery.com/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="//code.jquery.com/jquery-2.2.4.min.js"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.12.4.min.js"></script>
 <script>
     $(document).ready(function(){
@@ -16,6 +14,9 @@
             location.href = "${path}/board/write.do";
         });
     });
+    function list(page){
+    	location.href="${path}/board/list.do?curPage="+page+"&searchOption=${map.searchOption}&keyword=${map.keyword}";
+    }
 </script>
 </head>
 <body>
@@ -47,7 +48,7 @@
 		<c:forEach var="row" items="${map.list}">
 			<tr>
 				<td>${row.boardBno}</td>
-				<td><a href="/board/view.do?boardBno=${row.boardBno}">${row.boardTitle}</a></td>
+				<td><a href="${path}/board/view.do?bno=${row.boardBno}&curPage=${map.boardPager.curPage}&searchOption=${map.searchOption}&keyword=${map.keyword}">${row.boardTitle}</a></td>
 				<td>${row.boardWriter}</td>
 				<td>${row.boardRegdate}</td>
 				<td>${row.boardViewcnt}</td>

@@ -44,6 +44,7 @@ public class BoardController extends PublicController {
     	BoardPager boardPager = new BoardPager(count, curPage);
     	int start = boardPager.getPageBegin();
     	int end = boardPager.getPageEnd();
+    	System.out.println("start : "+start+ " end : "+ end);
     	List<BoardVO> list = boardService.listAll(start, end, searchOption, keyword);
     	
     	
@@ -68,7 +69,9 @@ public class BoardController extends PublicController {
 		}
 	}
     @RequestMapping(value="view.do", method=RequestMethod.GET)
-    public ModelAndView view(@RequestParam int boardBno, HttpSession session, HttpServletRequest request)throws Exception{
+    public ModelAndView view(@RequestParam int boardBno, int curPage, 
+    		String searchOption, String keyword,
+    		HttpSession session, HttpServletRequest request)throws Exception{
     	boardService.increaseViewcnt(boardBno, session);
     	BoardVO dto = boardService.read(boardBno);
     	ModelAndView mav = new ModelAndView();

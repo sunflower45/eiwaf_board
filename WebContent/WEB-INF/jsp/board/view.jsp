@@ -22,7 +22,7 @@
 				
 		})
 		$("#toList").click(function(){
-			location.href = "${path}/board/list.do?curPage=${curPage}&searchOption=${searchOption}&keyword=${keyword}";
+			location.href = "${path}/board/list.do";
 		})
 	})
 </script>

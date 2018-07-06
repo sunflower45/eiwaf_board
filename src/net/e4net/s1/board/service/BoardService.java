@@ -22,7 +22,6 @@ public class BoardService extends TestService {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("searchOption", searchOption);
 		map.put("keyword", keyword);
-		System.out.println("map : "+ map);
 		return (int) SqlSession.selectOne("BoardService.countArticle", map);
 	}
 	public void create(BoardVO vo) throws Exception {

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="BoardService">
-	<select id="listAll" resultType="net.e4net.s1.board.vo.BoardVO">
+	<select id="listAll" parameterType="hashmap" resultType="net.e4net.s1.board.vo.BoardVO">
 	<include refid="pagingHeader"></include>
 		SELECT board_bno as boardBno,
 			   board_title as boardTitle,
@@ -57,7 +57,7 @@
         </when>
         <!-- 전체 검색이 아닐 경우 -->
         <otherwise>
-            WHERE #{searchOption} like '%'||#{keyword}||'%'
+            WHERE ${searchOption} like '%'||#{keyword}||'%'
         </otherwise>
     </choose>
 </sql>
