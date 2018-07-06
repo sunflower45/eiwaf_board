@@ -30,15 +30,24 @@ public class BoardController extends PublicController {
 	BoardService boardService;
 	
 	
-    @RequestMapping("/list.do")
+    @RequestMapping(value="list.do")
 	public ModelAndView list(@RequestParam(defaultValue="board_title") String searchOption,
-			@RequestParam(defaultValue="") String keyword,  
+			@RequestParam(defaultValue="") String keyword,
+			@RequestParam(defaultValue="1") int curPage,
 			HttpServletRequest request) throws Exception {
+    	
+
+    	
+    	
     	HttpSession session = request.getSession();
     	String memberName = (String) session.getAttribute("memberName");
     	
     	List<BoardVO> list = boardService.listAll(searchOption, keyword);
     	int count = boardService.countArticle(searchOption, keyword);
+    	
+    	System.out.println("count : "+count);
+    	
+    	
     	Map<String, Object> map = new HashMap<String, Object>();
     	map.put("list", list);
     	map.put("count", count);
@@ -95,7 +104,9 @@ public class BoardController extends PublicController {
     }
     
     @RequestMapping(value="insert.do", method=RequestMethod.POST)
-    public ModelAndView insert(@ModelAttribute BoardVO vo ) throws Exception{
+    public ModelAndView insert(@ModelAttribute BoardVO vo, HttpSession session) throws Exception{
+    	String writer = (String)session.getAttribute("memberId");
+    	vo.setBoardWriter(writer);
     	boardService.create(vo);
     	return getOkModelAndView("redirect:/board/list.do");
     }

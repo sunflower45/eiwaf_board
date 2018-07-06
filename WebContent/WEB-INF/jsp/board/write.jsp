@@ -24,11 +24,6 @@
 				document.form1.boardContent.focus();
 				return;
 			}
-			if(writer=""){
-				alert("이름을 입력하세요");
-				document.form1.writer.focus();
-				return;
-			}
 			document.form1.submit();
 		});
 		$("#toList").click(function(){

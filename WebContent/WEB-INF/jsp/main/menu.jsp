@@ -8,6 +8,14 @@
 </head>
 <body>
 <a href="${path}/board/list.do">게시판</a>
-<a href="${path}/member/logout.do">로그아웃</a>
+<c:choose>
+	<c:when test="${sessionScope.id != null}">
+		<a href="${path}/member/logout.do">로그아웃</a>		
+	</c:when>
+	<c:otherwise>
+		<a href="${path}/main.do">로그인</a>
+	</c:otherwise>
+</c:choose>
+
 </body>
 </html>

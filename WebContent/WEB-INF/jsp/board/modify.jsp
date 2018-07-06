@@ -63,7 +63,7 @@
 	</div>
 	<div>
 		이름 : 
-		<input name="boardWriter" id="boardWriter" value="${dto.boardWriter}" placeholder="이름을 입력해주세요">
+		<input name="boardWriter" id="boardWriter" value="${dto.boardWriter}">
 	</div>
 	<div>
 		<input type="hidden" name="boardBno" value="${dto.boardBno}">

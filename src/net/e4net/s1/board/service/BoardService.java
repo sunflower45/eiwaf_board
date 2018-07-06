@@ -47,7 +47,7 @@ public class BoardService extends TestService {
 	@SuppressWarnings("unchecked")
 	public List<BoardVO> listAll(String searchOption, String keyword) throws Exception{
 		SqlSession = openSession(true);
-		Map<String, String> map = new HashMap<String, String>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("searchOption", searchOption);
 		map.put("keyword", keyword);
 		return (List<BoardVO>)SqlSession.selectList("BoardService.listAll", map);

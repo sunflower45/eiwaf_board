@@ -51,6 +51,7 @@
         <when test="searchOption == 'all'">
             WHERE board_content like '%'||#{keyword}||'%'
             OR board_title like '%'||#{keyword}||'%'
+            OR board_writer like '%'||#{keyword}||'%'
         </when>
         <!-- 전체 검색이 아닐 경우 -->
         <otherwise>

@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>게시글 보기</title>
-<script type="text/javascript" src="//code.jquery.com/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="//code.jquery.com/jquery-2.2.4.min.js"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
 	
@@ -20,6 +20,9 @@
 		$("#btnUpdate").click(function(){
 			location.href = "${path}/board/modify.do?boardBno=${dto.boardBno}";
 				
+		})
+		$("#toList").click(function(){
+			location.href = "${path}/board/list.do?curPage=${curPage}&searchOption=${searchOption}&keyword=${keyword}";
 		})
 	})
 </script>
@@ -44,8 +47,11 @@
 	</div>
 	<div>
 		<input type="hidden" name="boardBno" value="${dto.boardBno}">
-		<button type="button" id="btnUpdate">수정</button>
-		<button type="button" id = "btnDelete">삭제</button>
+		<c:if test="${sessionScope.memberName == dto.boardWriter}">
+			<button type="button" id="btnUpdate">수정</button>
+			<button type="button" id = "btnDelete">삭제</button>
+		</c:if>
+		<button type="button" id="toList">목록으로</button>
 	</div>
 </form>
 </body>
