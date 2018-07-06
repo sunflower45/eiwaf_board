@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import net.e4net.eiwaf.common.Status;
 import net.e4net.eiwaf.web.util.WebUtil;
 import net.e4net.s1.board.service.BoardService;
+import net.e4net.s1.board.vo.BoardPager;
 import net.e4net.s1.board.vo.BoardVO;
 import net.e4net.s1.comn.PublicController;
   
@@ -33,19 +34,18 @@ public class BoardController extends PublicController {
     @RequestMapping(value="list.do")
 	public ModelAndView list(@RequestParam(defaultValue="board_title") String searchOption,
 			@RequestParam(defaultValue="") String keyword,
-			@RequestParam(defaultValue="1") int curPage,
+			@RequestParam(defaultValue="1") int curPage, 
 			HttpServletRequest request) throws Exception {
-    	
-
-    	
-    	
     	HttpSession session = request.getSession();
     	String memberName = (String) session.getAttribute("memberName");
     	
-    	List<BoardVO> list = boardService.listAll(searchOption, keyword);
     	int count = boardService.countArticle(searchOption, keyword);
     	
-    	System.out.println("count : "+count);
+    	BoardPager boardPager = new BoardPager(count, curPage);
+    	int start = boardPager.getPageBegin();
+    	int end = boardPager.getPageEnd();
+    	List<BoardVO> list = boardService.listAll(start, end, searchOption, keyword);
+    	
     	
     	
     	Map<String, Object> map = new HashMap<String, Object>();
@@ -53,6 +53,9 @@ public class BoardController extends PublicController {
     	map.put("count", count);
     	map.put("searchOption", searchOption);
     	map.put("keyword", keyword);
+    	map.put("boardPager", boardPager);
+    	
+    	
     	ModelAndView mav = new ModelAndView();
 		mav.setViewName("board/list");
 		mav.addObject("map", map);

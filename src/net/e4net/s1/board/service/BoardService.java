@@ -18,9 +18,11 @@ public class BoardService extends TestService {
 	SqlSession SqlSession;
 	
 	public int countArticle(String searchOption, String keyword) throws Exception {
+		SqlSession = openSession(true);
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("searchOption", searchOption);
 		map.put("keyword", keyword);
+		System.out.println("map : "+ map);
 		return (int) SqlSession.selectOne("BoardService.countArticle", map);
 	}
 	public void create(BoardVO vo) throws Exception {
@@ -45,11 +47,13 @@ public class BoardService extends TestService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<BoardVO> listAll(String searchOption, String keyword) throws Exception{
+	public List<BoardVO> listAll(int start, int end,  String searchOption, String keyword) throws Exception{
 		SqlSession = openSession(true);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("searchOption", searchOption);
 		map.put("keyword", keyword);
+		map.put("start", start);
+		map.put("end", end);
 		return (List<BoardVO>)SqlSession.selectList("BoardService.listAll", map);
 	}
 
