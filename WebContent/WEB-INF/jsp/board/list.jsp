@@ -48,7 +48,12 @@
 		<c:forEach var="row" items="${map.list}">
 			<tr>
 				<td>${row.boardBno}</td>
-				<td><a href="${path}/board/view.do?bno=${row.boardBno}&curPage=${map.boardPager.curPage}&searchOption=${map.searchOption}&keyword=${map.keyword}">${row.boardTitle}</a></td>
+				<td><a href="${path}/board/view.do?boardBno=${row.boardBno}&curPage=${map.boardPager.curPage}&searchOption=${map.searchOption}&keyword=${map.keyword}">${row.boardTitle}
+				<c:if test="${row.boardReplyCnt > 0}">
+					<span style="color:red;">(${row.boardReplyCnt})</span>
+				</c:if>
+				</a>
+				</td>
 				<td>${row.boardWriter}</td>
 				<td>${row.boardRegdate}</td>
 				<td>${row.boardViewcnt}</td>

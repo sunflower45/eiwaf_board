@@ -11,16 +11,14 @@ public class BoardVO {
     private String boardWriter;      // 게시글 작성자
     private String boardRegdate;     // 게시글 작성일자 util.Date
     private int boardViewcnt;        // 게시글 조회수
-    private String memberName;
+    private int boardReplyCnt;
     
-    public String getMemberName() {
-		return memberName;
+    public int getBoardReplyCnt() {
+		return boardReplyCnt;
 	}
-    
-    public void setMemberName(String memberName) {
-		this.memberName = memberName;
+    public void setBoardReplyCnt(int boardReplyCnt) {
+		this.boardReplyCnt = boardReplyCnt;
 	}
-    
     // Getter/Setter
     public int getBoardBno() {
         return boardBno;
@@ -62,6 +60,6 @@ public class BoardVO {
     @Override
     public String toString() {
         return "BoardVO [boardBno=" + boardBno + ", boardTitle=" + boardTitle + ", boardContent=" + boardContent + ", boardWriter=" + boardWriter + ", boardRegdate="
-                + boardRegdate + ", boardViewcnt=" + boardViewcnt + ", memberName=" + memberName + "]";
+                + boardRegdate + ", boardViewcnt=" + boardViewcnt + ", ==" +  "]";
     }
 }

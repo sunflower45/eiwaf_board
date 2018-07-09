@@ -5,8 +5,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>게시글 보기</title>
-<script type="text/javascript" src="//code.jquery.com/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="//code.jquery.com/jquery-2.2.4.min.js"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
 	

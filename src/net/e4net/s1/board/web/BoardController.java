@@ -44,9 +44,7 @@ public class BoardController extends PublicController {
     	BoardPager boardPager = new BoardPager(count, curPage);
     	int start = boardPager.getPageBegin();
     	int end = boardPager.getPageEnd();
-    	System.out.println("start : "+start+ " end : "+ end);
     	List<BoardVO> list = boardService.listAll(start, end, searchOption, keyword);
-    	
     	
     	
     	Map<String, Object> map = new HashMap<String, Object>();
@@ -120,7 +118,6 @@ public class BoardController extends PublicController {
     
     @RequestMapping(value="update.do", method=RequestMethod.POST)
     public ModelAndView update(@ModelAttribute BoardVO vo) throws Exception{
-    	System.out.println("**********update controller**********");
     	boardService.update(vo);
     	return getOkModelAndView("redirect:/board/list.do");
     }

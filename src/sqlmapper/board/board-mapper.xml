@@ -4,13 +4,14 @@
 <mapper namespace="BoardService">
 	<select id="listAll" parameterType="hashmap" resultType="net.e4net.s1.board.vo.BoardVO">
 	<include refid="pagingHeader"></include>
-		SELECT board_bno as boardBno,
+		SELECT distinct board_bno as boardBno,
 			   board_title as boardTitle,
 			   board_content as boardContent,
 			   board_writer as boardWriter,
 			   board_regdate as boardRegdate,
-			   board_viewcnt as boardViewcnt
-		FROM tbl_board
+			   board_viewcnt as boardViewcnt,
+			   (SELECT COUNT(*) FROM tbl_reply WHERE board_bno = reply_bno) AS boardReplyCnt
+		FROM tbl_board b, tbl_member m
     	<!-- WHERE절을 include 태그로 삽입 -->
     	<include refid="search"></include>
     	ORDER BY board_bno desc, board_regdate desc
@@ -62,7 +63,7 @@
     </choose>
 </sql>
  <sql id="pagingHeader">
-    SELECT * FROM (
+    SELECT  * FROM (
         SELECT ROWNUM AS rn, A.* FROM (
 </sql>
 <sql id="pagingFooter">

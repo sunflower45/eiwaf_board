@@ -10,6 +10,7 @@
 <a href="${path}/board/list.do">게시판</a>
 <c:choose>
 	<c:when test="${sessionScope.id != null}">
+		${sessionScope.id }님이 로그인중입니다.
 		<a href="${path}/member/logout.do">로그아웃</a>		
 	</c:when>
 	<c:otherwise>

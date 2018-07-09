@@ -18,7 +18,6 @@ public class MemberService extends TestService{
 	public String idCheck(MemberVO vo) throws Exception {
 		SqlSession = null;
 		SqlSession = openSession(true);
-		System.out.println("service :"+SqlSession.selectOne("member.idCheck", vo)); 
 		return (String) SqlSession.selectOne("member.idCheck", vo);
 	}
 	

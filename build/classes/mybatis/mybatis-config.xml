@@ -71,6 +71,7 @@
 		<mapper resource="sqlmapper/test/test-mapper.xml"/>
 		<mapper resource="sqlmapper/board/board-mapper.xml"/>
 		<mapper resource="sqlmapper/board/member-mapper.xml"/>
+		<mapper resource="sqlmapper/board/reply-mapper.xml" />
 	</mappers>
 
 </configuration>

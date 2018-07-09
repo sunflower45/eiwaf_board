@@ -11,6 +11,14 @@
 <script type="text/javascript">
 	
 	$(document).ready(function(){
+		
+		listReply();
+		
+		
+		$("#btnReply").click(function(){
+			replyJson();
+		});
+		
 		$("#btnDelete").click(function(){
 			if(confirm("삭제하시겠습니까?")){
 				document.form1.action="${path}/board/delete.do";
@@ -25,7 +33,76 @@
 			location.href = "${path}/board/list.do";
 		})
 	})
+	
+	
+	
+	function replyJson(){
+		var replyText = $("#replyText").val();
+		var boardBno = "${dto.boardBno}";
+		$.ajax({
+			method:"post",
+			url : "http://localhost:8080/reply/insert.do",
+			data : { boardBno : boardBno,replyText : replyText },
+			success : function(){
+				alert('댓글이 등록되었습니다.');
+				listReply();
+			},
+	        error: function (request,status,error){
+	        	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+
+	        }
+		})
+	}
+	
+	
+ 	function listReply(){
+		$.ajax({
+			method : 'get',
+			url : "http://localhost:8080/reply/list.do?replyBno=${dto.boardBno}",
+			
+			success : function(result) {
+				$("#listReply").html(result);	
+			},
+	        error: function (request,status,error){
+	        	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+
+	        }
+		})
+	}
+	 
+	 
+	 function reply(){
+		var replyText = $("#replyText").val();
+		var boardBno = "${dto.boardBno}";
+		//var param = "replyText="+replyText+"&boardBno="+boardBno;
+		$.ajax({
+			method:'post',
+			url:"http://localhost:8080/reply/insert.do",
+			data:{replyText : replyText, boardBno : boardBno},
+			success : function(){
+				alert('댓글이 등록되었습니다.');
+				listReply();
+			},
+	        error: function (request,status,error){
+	        	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+
+	        }
+		})
+	}
+	
+    function changeDate(date){
+        date = new Date(parseInt(date));
+        year = date.getFullYear();
+        month = date.getMonth();
+        day = date.getDate();
+        hour = date.getHours();
+        minute = date.getMinutes();
+        second = date.getSeconds();
+        strDate = year+"-"+month+"-"+day+" "+hour+":"+minute+":"+second;
+        return strDate;
+    }
 </script>
+
 </head>
 <body>
 <h2>게시글 보기</h2>
@@ -54,5 +131,14 @@
 		<button type="button" id="toList">목록으로</button>
 	</div>
 </form>
+<div style="width:650px;text-align:center;">
+	<br>
+	<c:if test="${sessionScope.memberId != null}">
+		<textarea rows="5" cols="80" id="replyText" placeholder="댓글을 작성해주세요"></textarea>
+		<br>
+		<button type="button" id="btnReply">댓글 작성</button>
+	</c:if>
+</div>
+<div id="listReply"></div>
 </body>
 </html>
