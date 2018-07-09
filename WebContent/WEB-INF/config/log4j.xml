@@ -71,6 +71,26 @@
 		<level value="DEBUG"/>
 		<appender-ref ref="webLog"/>
 	</logger>
+	
+	<logger name="java.sql.Connection"  additivity="false">
+		<level value="DEBUG"/>
+		<appender-ref ref="console" />
+	</logger>
+	
+	<logger name="java.sql.PreparedStatement" additivity="false">
+		<level value="DEBUG"/>
+		<appender-ref ref="console" />
+	</logger>
+	
+	<logger name="java.sql.Statement" additivity="false">
+		<level value="DEBUG"/>
+		<appender-ref ref="console" />
+	</logger>
+	
+	<logger name="java.sql.ResultSet" additivity="false">
+		<level value="DEBUG"/>
+		<appender-ref ref="console" />
+	</logger>
 
 	<!--
 	net.sf.log4jdbc.DriverSpy 미지원

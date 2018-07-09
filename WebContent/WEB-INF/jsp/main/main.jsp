@@ -1,110 +1,49 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/view/layout/taglib-include.jsp"%>
-
-<ei:layoutRender name="/view/layout/main-layout.jsp">
-<ei:layoutComponent name="eiLayoutTitle">ê´€ë¦¬ìì‹œìŠ¤í…œ</ei:layoutComponent>
-<ei:layoutComponent name="eiLayoutContent">
-
-<script type="text/javascript" src="/js/tree/dtree.js"></script>
-<script type="text/javascript" src="/js/main.js"></script>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<script type="text/javascript" src="//code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
-//<![CDATA[
-	function eiwaf_DocumentReady(status) {
-		$(window).resize(function () {
-			var winsize = $(window).height();
-			if (winsize < 600) {
-				$('#ifrmContent').height(600 - 115);
-				$('#divMainMenu').height(600 - 150);
-			} else {
-				$('#ifrmContent').height(winsize - 115);
-				$('#divMainMenu').height(winsize - 150);
-			}
-		}).triggerHandler('resize');
 
-		$("body").addClass("main");
-
-		IfrmContentLink("/main/mainContent.do");
-
-		$("#himgBtnSwitchClose").click(function(){
-			$('#divLeftAreaClose').show();
-			$('#divLeftAreaOpen').hide();
-		}).css('cursor', 'hand');
-		$("#himgBtnSwitchOpen").click(function(){
-			$('#divLeftAreaOpen').show();
-			$('#divLeftAreaClose').hide();
-		}).css('cursor', 'hand');
-	}
-//]]>
+$(document).ready(function(){
+	$("#btnJoin").click(function(){
+		document.form1.action="${path}/member/join.do";
+	});
+	$("#btnLogin").click(function(){
+		document.form1.action="${path}/member/loginCheck.do";
+		document.form1.submit();
+	});
+	$("#btnFind").click(function(){
+		document.form1.action="${path}/member/find.do";
+	});
+});
 </script>
-<form name="form1">
-	<input type="hidden" name="user_id"/>
+<title>¸ŞÀÎ ÆäÀÌÁö</title>
+</head>
+<body>
+<h2>${msg}</h2>
+<h3>·Î±×ÀÎ</h3>
+<form name="form1" method="post">
+<c:choose>
+<c:when test="${msg == 'success'}"> 
+	¾ÆÀÌµğ : ${memberId}<br>
+	´Ğ³×ÀÓ : ${memberName}<br>
+	<a href="${path}/member/logout.do">·Î±×¾Æ¿ô</a>
+	<a href="${path}/board/list.do">°Ô½ÃÆÇ ¸®½ºÆ®</a>
+</c:when>
+<c:otherwise>
+¾ÆÀÌµğ : <input name="memberId" id="memberId" placeholder="¾ÆÀÌµğ¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä">
+<br>
+ºñ¹Ğ¹øÈ£ :
+<input name="memberPw" id="memberPw" type="password">
+<button type="button" id="btnLogin">·Î±×ÀÎ</button><br>
+<button id="btnJoin">È¸¿ø°¡ÀÔ</button>
+<button id="btnFind">ID/PW Ã£±â</button>
+</c:otherwise>
+</c:choose>
 </form>
-<div id="Wrap">
-    <div id="Header">
-        <div class="tabNavi">
-            <div id="divNavi" class="solutions">
-                <ul>
-                	<li><a href="http://www.smba.go.kr" target="_blank"><span>ì¤‘ì†Œê¸°ì—…ì²­</span></a></li>
-                    <li><a href="http://www.bizinfo.go.kr" target="_blank"><span>ë¹„ì¦ˆì¸í¬</span></a></li>
-                </ul>
-            </div>
-            <div class="hMenu">
-                <ul>
-                    <li><a href="/"><span>HOME</span></a></li>
-                    <li><a href="/main/logout.do"><span>LOGOUT</span></a></li>
-                	<li><a href="#" onclick="GoView('${userId}');return false;"><span>íšŒì›ì •ë³´ìˆ˜ì •</span></a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="topNavi">
-            <span class="Logo"><img id="imgLogoClick" src="/images/ci.png" alt="ì¤‘ì†Œê¸°ì—…ì²­" /></span>
-        </div>
-    </div>
 
-    <table style="width:100%;" class="contentTable">
-        <tr>
-            <td width="195" valign="top" class="LeftArea_open">
-                <div id="divLeftAreaOpen" class="LeftArea_open">
-                    <div id="divTreeViewtab" class="treeViewtab">
-                        <ul>
-                            <li class="current"><a href="#"><span>ì „ì²´ë©”ë‰´</span></a></li>
-                        </ul>
-                    </div>
-                    <div id="divMainMenu" class="treeView" style="width:165px;">
-                        <div id="divALLMainMenu" style="width:165px;"></div>
-                    </div>
-                    <script type="text/javascript">
-                        var fvALLSysImproPageId = "";
-                        var fvALLMainMenu = new dTree('fvALLMainMenu', '/images/tree');
-                        MainPageInitMainMenuTree(fvALLMainMenu);
-                    </script>
-                    <script type="text/javascript" src="/js/tree/dtree_${grpCl}_data.js"></script>
-                    <script type="text/javascript">
-                        MainPageDisplayMainMenuTree('divALLMainMenu', fvALLMainMenu);
-                    </script>
-                    <div class="switchBtn-close">
-                        <a href="#"><img id="himgBtnSwitchClose" src="/images/btn_switch_close_out.gif" alt="" /></a>
-                    </div>
-                </div>
-            </td>
-            <td id="divLeftAreaClose" valign="top" class="LeftArea_close" style="display:none">
-                <div class="LeftArea_close">
-                    <div class="switchBtn-open">
-                        <a href="#"><img id="himgBtnSwitchOpen" src="/images/btn_switch_open_out.gif" alt="" /></a>
-                    </div>
-                </div>
-            </td>
-            <td width="100%" valign="top">
-            	<div><iframe id="ifrmContent" name="ifrmContent" frameborder="0" width="100%" scrolling="yes"></iframe></div>
-            </td>
-        </tr>
-    </table>
-</div>
-<div id="divbottombar" class="bottom-bar">
-	<p class="name">${userNm}(${userId})</p>
-	<p class="compu">${clientIp}</p>
-	<p class="time"><script type="text/javascript">FlashfObject("/images/time_01.swf", 125, 20);</script></p>
-</div>
-
-</ei:layoutComponent>
-</ei:layoutRender>
+</body>
+</html>
