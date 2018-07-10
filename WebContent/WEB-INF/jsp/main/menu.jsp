@@ -7,17 +7,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 </head>
 <body>
-<a href="${path}/board/list.do" style="margin-top:10px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;게시판</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="${path}/board/list.do" style="margin-top:10px">게시판</a>
 <c:choose>
 	<c:when test="${sessionScope.memberId != null}">
 		<a href="${path}/member/logout.do">로그아웃</a>		
 		<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${sessionScope.memberId }님이 로그인중입니다.
-
 	</c:when>
 	<c:otherwise>
 		<a href="${path}/main.do">로그인</a>
 	</c:otherwise>
 </c:choose>
-
 </body>
 </html>

@@ -32,7 +32,6 @@ public class ReplyController extends PublicController {
 		String memberId = (String)session.getAttribute("memberId");
 		vo.setReplyer(memberId);
 		
-		System.out.println(request.getParameter("boardBno"));
 		int replyBno = Integer.parseInt(request.getParameter("boardBno"));
 		
 		String replyText = request.getParameter("replyText");
@@ -82,6 +81,7 @@ public class ReplyController extends PublicController {
     		return getFailModelAndView(mav, status);
     	}
 	}
+
 	
 	@RequestMapping(value="update.do", method= {RequestMethod.POST, RequestMethod.GET})
 	public ModelAndView replyUpdate(ReplyVO vo, HttpServletRequest request) {
@@ -105,6 +105,7 @@ public class ReplyController extends PublicController {
 	
 }
 	
+	 
 	@RequestMapping(value="delete.do")
 	public ModelAndView replyDelete(@RequestParam String replyRno,  HttpServletRequest request) {
 		int rno = Integer.parseInt(replyRno);

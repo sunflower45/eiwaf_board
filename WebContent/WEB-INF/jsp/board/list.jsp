@@ -22,23 +22,37 @@
     }
 </script>
 </head>
-<body>
+<body style="margin-top:10px;margin-left:20px">
 <jsp:include page="../main/menu.jsp" ></jsp:include>
-	<strong><h1 style="margin-left:250px">게시글 목록</h1></strong>
+	<h1 style="margin-left:250px">게시글 목록</h1>
 	<form name="form1" method="post" action="${path}/board/list.do">
-	<div class="row">
-		<select class = "col-md-1 form-control" style="margin-left:40px;width:100px"name="searchOption">
+
+	<table>
+		<tr>
+			<td>
+			<select class="form-control" style="margin-left:20px;width:100px"name="searchOption">
 			<option value="all" <c:out value="${map.searchOption == 'all'?'selected':''}"></c:out> >제목+내용</option>
 			<option value="board_writer" <c:out value="${map.searchOption == 'board_writer'?'selected':''}"/> >이름</option>
 			<option value="board_content" <c:out value="${map.searchOption == 'board_content'?'selected':''}"></c:out> >내용</option>
             <option value="board_title" <c:out value="${map.searchOption == 'board_title'?'selected':''}"></c:out> >제목</option>
-		</select>
-		<input name="keyword" class="form-control col-md-4" style="width:300px;margin-left:5px" value="${map.keyword}">&nbsp;
-		<button type="submit" style="margin-left:5px;width:100px" class="btn btn-success col-md-1 ">조희</button>&nbsp;
-	<c:if test="${sessionScope.memberId != null}">
-		<button type="button" style="margin-left:5px;width:100px" class="btn btn-success col-md-1" id="btnWrite">글쓰기</button>
-	</c:if>
-	</div>
+			</select>
+			</td>
+			<td width="5px"></td>
+			<td>
+			<input name="keyword" class="form-control" style="width:300px;" value="${map.keyword}">
+			</td>
+			<td width="5px"></td>
+			<td>
+			<button type="submit" style="width:100px" class="btn btn-success col-md-1 ">조희</button>
+			</td>
+			<td width="180px"></td>
+			<td>
+			<c:if test="${sessionScope.memberId != null}">
+			<button type="button" style="width:100px" class="btn btn-success col-md-1" id="btnWrite">글쓰기</button>
+			</c:if>
+			</td>
+		</tr>
+	</table>
 	</form>
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${map.count} 개의 게시물이 있습니다.
 	<table  style="margin-left:20px;width:800px" class="table table-hover">

@@ -6,10 +6,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>회원가입</title>
 
-<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 
+$(document).on('click', '#toLogin', function(){
+	location.href = "${path}/main.do";
 
+})
 $(document).ready(function () {
 	//[1] lblError 레이어 클리어
     $('#memberPw').keyup(function () {
@@ -33,9 +39,8 @@ $(document).on('click', '#idCheck', function(){
     	var memberId = $("#memberId").val();
     	$.ajax({
     		method : 'POST',
+    		async: true,
     		data : {memberId : memberId},
-    		type : 'text',
-    		contentType:"application/json; charset=utf-8",
     		url : 'http://localhost:8080/member/idCheck.do',
     		success : function(data){
     			if(data.cnt == "1"){
@@ -54,43 +59,45 @@ $(document).on('click', '#idCheck', function(){
 </script>
 </head>
 <body>
-<h1>회원가입 페이지</h1>
+<h1 style="margin-left:10px">회원가입 페이지</h1>
   <form id="form1" action="${path}/member/joinUpdate.do" method="post">
-	<table>
+	<table class="table" style="margin-left:10px;width:800px;">
 		<tr>
-			
 			<td>아이디</td>
-			<td><input type="text" id="memberId" name="memberId"></td>
-			<td id="exist"></td>
-			<td><button id="idCheck" type="button">아이디 중복 검사</button></td>
+			<td><input class="form-control" type="text" id="memberId" name="memberId">
+			<button id="idCheck"class="btn btn-default"  style="margin-top:10px;" type="button">아이디 중복 검사</button>
+			</td>
+			
 		</tr>
 		<tr>
 			<td>비밀번호</td>
-			<td><input type="password" id="memberPw" name="memberPw"></td>
+			<td><input  class="form-control"  type="password" id="memberPw" name="memberPw"></td>
 		</tr>
 		
 		<tr>
-			<td>비밀번호 확인</td>
-			<td><input type="password" id="memberPwCheck" name="memberPwCheck"></td>
-		</tr>
-		<tr>
-			<td>
-				<div id="lblError">
+			<td>비밀번호 확인 &nbsp;</td>
+			<td><input  class="form-control"  type="password" id="memberPwCheck" name="memberPwCheck">
+			<div style="margin-top:10px" id="lblError">
 					암호를 입력하세요
-				</div>
+			</div>
 			</td>
+			
 		</tr>
 		<tr>
 			<td>이름</td>
-			<td><input type="text" id="memberName" name="memberName"></td>
+			<td><input class="form-control"  type="text" id="memberName" name="memberName"></td>
 		</tr>
 		<tr>
 			<td>이메일</td>
-			<td><input type="text" name="memberEmail" id="memberEmail"></td>
+			<td><input class="form-control"  type="text" name="memberEmail" id="memberEmail"></td>
 		</tr>
 		
 		<tr>
-			<td colspan="2" align="center"><button type="submit" id="submitBtn" >가입하기</button><input type="reset" value="다시작성"></td>
+			<td colspan="2" align="center"><button class="btn btn-default" type="submit" id="submitBtn" >가입하기</button>&nbsp;&nbsp;&nbsp;
+			<input  class="btn btn-default" type="reset" value="다시작성">&nbsp;&nbsp;&nbsp;
+			<input class="btn btn-default" id="toLogin" type="button" value="로그인 화면">
+			</td>
+			
 		</tr>
 	</table>
 	

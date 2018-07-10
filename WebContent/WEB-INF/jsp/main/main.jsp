@@ -48,19 +48,15 @@ $(document).ready(function(){
 </c:when>
 <c:otherwise>
 <div class="form-horizontal">
-<h3 class="text-center">로그인</h3>
+<h1 class="text-center">로그인</h1>
   <div class="form-group">
-    <label class="col-sm-2 control-label">ID</label>
-    <div class="col-sm-10"style="width:700px">
-      <input type="text" name="memberId" class="form-control" id="memberId" placeholder="ID">
-    </div>
+    <h3>ID</h3><input type="text" style="width:700px;float:left" name="memberId" class="form-control" id="memberId" placeholder="ID">
+    
   </div>
   <br>
   <div class="form-group">
-    <label  class="col-sm-2 control-label">Password</label>
-    <div class="col-sm-10" style="width:700px">
-      <input type="password" class="form-control" name="memberPw" id="memberPw" placeholder="Password">
-    </div>
+    <h3>Password</h3><input type="password" style="width:700px"class="form-control" name="memberPw" id="memberPw" placeholder="Password">
+    
   </div>
   <br>
   <div class="form-group">

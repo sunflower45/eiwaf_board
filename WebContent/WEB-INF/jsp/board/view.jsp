@@ -84,7 +84,6 @@
 		$.ajax({
 			method:'post',
 			url:"http://localhost:8080/reply/insert.do",
-			contentType:"application/json; charset=utf-8",
 			data:{replyText : replyText, boardBno : boardBno},
 			success : function(){
 				alert('댓글이 등록되었습니다.');
@@ -111,12 +110,12 @@
 </script>
 
 </head>
-<body>
+<body style="margin-top:10px;margin-left:20px">
 <jsp:include page="../main/menu.jsp" ></jsp:include>
 
-<h2 style="margin-left:50px">게시글 보기</h2>
+<h2 >게시글 보기</h2>
 <form name="form1" method="post">
-	<table style="margin-left:20px;width:800px;" class="table table-striped">
+	<table style="width:800px;" class="table table-striped">
 		<tr>
 			<td style="width:200px">작성일자</td>
 			<td>${dto.boardRegdate}

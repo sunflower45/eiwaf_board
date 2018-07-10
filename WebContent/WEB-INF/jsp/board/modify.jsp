@@ -6,6 +6,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>게시글 보기</title>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
 <script type="text/javascript">
 	
 	$(document).ready(function(){
@@ -50,33 +55,36 @@
 	})
 </script>
 </head>
-<body>
+<body style="margin-left:20px">
 <h2>게시글 보기</h2>
 <form name="form1" method="post">
-	<div>
-		작성일자 : ${dto.boardRegdate}
-	</div>
-	<div>
-		조회수 : ${dto.boardViewcnt}
-	</div>
-	<div>
-		제목 :
-		<input name="boardTitle" id="boardTitle" size="80" value="${dto.boardTitle}" placeholder="제목을 입력해주세요">
-	</div>
-	<div>
-		내용 :
-		<textarea name="boardContent" id="boardContent" rows="4" cols="80" placeholder="내용을 입력해주세요">${dto.boardContent}</textarea>
-	</div>
-	<div>
-		이름 : 
-		<input name="boardWriter" id="boardWriter" value="${dto.boardWriter}">
-	</div>
+<table class="table" style="width:800px">
+	<tr>
+		<td>작성일자</td>
+		<td>${dto.boardRegdate}</td>
+	</tr>
+	<tr>
+		<td>조회수</td>
+		<td>${dto.boardViewcnt}</td>
+	</tr>
+	<tr>
+		<td>제목</td>
+		<td><input name="boardTitle" class="form-control" id="boardTitle" size="80" value="${dto.boardTitle}" placeholder="제목을 입력해주세요"></td>
+	</tr>
+	<tr>
+		<td>내용</td>
+		<td><textarea name="boardContent"  class="form-control" id="boardContent" rows="4" cols="80" placeholder="내용을 입력해주세요">${dto.boardContent}</textarea></td>
+	</tr>
+	<tr>
+		<td>이름</td>
+		<td>${dto.boardWriter}</td>
+	</tr>
+</table>
 	<div>
 		<input type="hidden" name="boardBno" value="${dto.boardBno}">
-		<button type="button" id="btnUpdete">수정</button>
-		<button type="button" id = "btnDelete">삭제</button>
-		
-			<button type="button" id="btnToList">목록으로</button>
+		<button type="button" id="btnUpdete" class="btn btn-success">수정</button>
+		<button type="button" id = "btnDelete" class="btn btn-success">삭제</button>
+		<button type="button" id="btnToList" class="btn btn-success">목록으로</button>
 	</div>
 </form>
 </body>

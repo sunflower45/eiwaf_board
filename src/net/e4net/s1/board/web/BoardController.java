@@ -71,6 +71,7 @@ public class BoardController extends PublicController {
     		String searchOption, String keyword,
     		HttpSession session, HttpServletRequest request)throws Exception{
     	boardService.increaseViewcnt(boardBno, session);
+    	
     	BoardVO dto = boardService.read(boardBno);
     	ModelAndView mav = new ModelAndView();
     	mav.setViewName("board/view");
@@ -94,6 +95,8 @@ public class BoardController extends PublicController {
     	}
     }
     
+
+    
     @RequestMapping(value="modify.do", method=RequestMethod.GET)
     public ModelAndView modify(@RequestParam int boardBno, HttpServletRequest request) throws Exception {
     	BoardVO dto = boardService.read(boardBno);
@@ -107,8 +110,8 @@ public class BoardController extends PublicController {
     		return getFailModelAndView(mav, status);
     	}
     }
-    
- 
+       
+     
     @RequestMapping(value="insert.do", method=RequestMethod.POST)
     public ModelAndView insert(@ModelAttribute BoardVO vo, HttpSession session) throws Exception{
     	String writer = (String)session.getAttribute("memberId");
@@ -117,7 +120,6 @@ public class BoardController extends PublicController {
     	return getOkModelAndView("redirect:/board/list.do");
     }
     
-
     
 
     @RequestMapping(value="update.do", method=RequestMethod.POST)

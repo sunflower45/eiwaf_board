@@ -40,6 +40,7 @@
 		UPDATE tbl_board SET board_viewcnt = board_viewcnt + 1
 		WHERE board_bno = #{boardBno}
 	</update>
+	
 	<update id="updateArticle">
 		UPDATE tbl_board SET board_title = #{boardTitle}, board_content = #{boardContent}, board_writer=#{boardWriter}
 		WHERE board_bno = #{boardBno}

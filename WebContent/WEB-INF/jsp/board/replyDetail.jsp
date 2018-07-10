@@ -17,9 +17,10 @@ $("#btnReplyUpdate").click(function(){
 function replyUpdate(){
 	var replyText = $("#replyText2").val();
 	var replyRno = $("#replyRno").val();
+	console.log("replyRno : "+replyRno);
+	console.log("replyText : "+replyText);
 	$.ajax({
 		method:'post',
-		contentType:"application/json; charset=utf-8",
 		url : "http://localhost:8080/reply/update.do",
 		data : {replyText : replyText, replyRno : replyRno},
 		success : function(result){
@@ -37,7 +38,6 @@ $("#btnReplyDelete").click(function(){
 	if(confirm("삭제하시겠습니까?")){
 		$.ajax({
 			method : 'delete',
-			contentType:"application/json; charset=utf-8",
 			url : "http://localhost:8080/reply/delete.do?replyRno=${vo.replyRno}",
 			success : function(result){
 				console.log(result);
@@ -60,18 +60,18 @@ $("#btnReplyClose").click(function(){
 </head>
 <body>
 댓글 번호 : ${vo.replyRno }<br>
-<textarea id="replyText2" name="replyText2" rows="5" cols="82">
-	${vo.replyText }
+<textarea style="width:400px" class="form-control" id="replyText2" name="replyText2" rows="5" cols="82">
+	${vo.replyText}
 </textarea>
 <input type="hidden" name="replyRno" id = "replyRno" value="${vo.replyRno}">
 
-<div style="text-align:center;">
+<div>
 	<c:if test="${sessionScope.memberId == vo.replyer }">
-		<button type="button" id="btnReplyUpdate">수정</button>
-		<button type="button" id="btnReplyDelete">삭제</button>
+		<button style="margin-top:10px" class="btn btn-success btn-xs" type="button" id="btnReplyUpdate">수정</button>
+		<button style="margin-top:10px"  class="btn btn-success btn-xs"type="button" id="btnReplyDelete">삭제</button>
 
 	</c:if>
-	<button type="button" id="btnReplyClose">닫기</button>
+	<button style="margin-top:10px"  class="btn btn-success btn-xs" type="button" id="btnReplyClose">닫기</button>
 </div>
 </body>
 </html>
