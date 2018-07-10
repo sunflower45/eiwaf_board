@@ -11,6 +11,7 @@ $(document).on('click', '#btn', function(){
 	var id = $("#id").val();
 	$.ajax({
 		url:"http://localhost:8080/member/ajax.do",
+		contentType:"application/json; charset=utf-8",
 		method : "post",
 		type : "text",
 		data : {id : id},

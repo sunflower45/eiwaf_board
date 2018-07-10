@@ -35,6 +35,7 @@ $(document).on('click', '#idCheck', function(){
     		method : 'POST',
     		data : {memberId : memberId},
     		type : 'text',
+    		contentType:"application/json; charset=utf-8",
     		url : 'http://localhost:8080/member/idCheck.do',
     		success : function(data){
     			if(data.cnt == "1"){

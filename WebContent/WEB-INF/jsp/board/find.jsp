@@ -19,6 +19,7 @@ $(document).on('click','#findId',function(){
         url:'http://localhost:8080/member/findId.do',
         method:'POST',
         type:'text',
+        contentType:"application/json; charset=utf-8",
         data: {memberName : memberName ,  memberEmail : memberEmail},
         success:function(data){
         	$("#idList").append("<h1>"+"회원님의 정보로 등록된 아이디는 : "+data.memberId+" 입니다.</h1>");
@@ -39,6 +40,7 @@ $(document).on('click','#findPw',function(){
 	$.ajax({
         url:'http://localhost:8080/member/findPw.do',
         method:'POST',
+        contentType:"application/json; charset=utf-8",
         type:'text',
         data: {memberName : memberName ,  memberId : memberId},
         success:function(data){

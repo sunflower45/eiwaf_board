@@ -19,6 +19,7 @@ function replyUpdate(){
 	var replyRno = $("#replyRno").val();
 	$.ajax({
 		method:'post',
+		contentType:"application/json; charset=utf-8",
 		url : "http://localhost:8080/reply/update.do",
 		data : {replyText : replyText, replyRno : replyRno},
 		success : function(result){
@@ -36,6 +37,7 @@ $("#btnReplyDelete").click(function(){
 	if(confirm("삭제하시겠습니까?")){
 		$.ajax({
 			method : 'delete',
+			contentType:"application/json; charset=utf-8",
 			url : "http://localhost:8080/reply/delete.do?replyRno=${vo.replyRno}",
 			success : function(result){
 				console.log(result);

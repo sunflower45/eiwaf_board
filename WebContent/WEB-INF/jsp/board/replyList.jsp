@@ -27,6 +27,7 @@ function showReplyModify(replyRno){
 </script>
 </head>
 <body>
+
 	<table style="width:700px">
 		<c:forEach var="row" items="${list}">
 		<tr>
@@ -42,6 +43,5 @@ function showReplyModify(replyRno){
 		</tr>
 		</c:forEach>
 	</table>
-	<div id="modifyReply"></div>
 </body>
 </html>

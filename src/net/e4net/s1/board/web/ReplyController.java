@@ -7,8 +7,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,8 +32,8 @@ public class ReplyController extends PublicController {
 		String memberId = (String)session.getAttribute("memberId");
 		vo.setReplyer(memberId);
 		
+		System.out.println(request.getParameter("boardBno"));
 		int replyBno = Integer.parseInt(request.getParameter("boardBno"));
-		
 		
 		String replyText = request.getParameter("replyText");
 		vo.setReplyBno(replyBno);
@@ -50,7 +48,6 @@ public class ReplyController extends PublicController {
     		return getFailModelAndView(mav, status);
     	}
 	}
-	
 	@RequestMapping(value="list.do", method=RequestMethod.GET)
 	public ModelAndView list(@RequestParam int replyBno, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
@@ -110,7 +107,6 @@ public class ReplyController extends PublicController {
 	
 	@RequestMapping(value="delete.do")
 	public ModelAndView replyDelete(@RequestParam String replyRno,  HttpServletRequest request) {
-		System.out.println("delete1");
 		int rno = Integer.parseInt(replyRno);
 		ModelAndView mav = new ModelAndView();
 		replyService.delete(rno);

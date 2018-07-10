@@ -1,10 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script type="text/javascript" src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
 <script type="text/javascript">
 
 $(document).ready(function(){
@@ -18,29 +23,54 @@ $(document).ready(function(){
 	$("#btnFind").click(function(){
 		document.form1.action="${path}/member/find.do";
 	});
+	$("#btnLogout").click(function(){
+		document.form1.action="${path}/member/logout.do";
+	});
+	$("#btnBoard").click(function(){
+		document.form1.action="${path}/board/list.do";
+	});
 });
 </script>
-<title>¸ŞÀÎ ÆäÀÌÁö</title>
+<title>ë©”ì¸ í˜ì´ì§€</title>
 </head>
-<body>
-<h2>${msg}</h2>
-<h3>·Î±×ÀÎ</h3>
+<body style="position:absolute;top:50%;left:50%;transform:translate(-50%, -50%)">
+
+
 <form name="form1" method="post">
+
 <c:choose>
 <c:when test="${msg == 'success'}"> 
-	¾ÆÀÌµğ : ${memberId}<br>
-	´Ğ³×ÀÓ : ${memberName}<br>
-	<a href="${path}/member/logout.do">·Î±×¾Æ¿ô</a>
-	<a href="${path}/board/list.do">°Ô½ÃÆÇ ¸®½ºÆ®</a>
+	<h2 class="text-center">Login ${msg}</h2>
+	ì•„ì´ë”” : ${memberId}<br>
+	ë‹‰ë„¤ì„ : ${memberName}<br><br>
+	<button id="btnLogout" class="btn btn-success">ë¡œê·¸ì•„ì›ƒ</button>
+	<button id="btnBoard" class="btn btn-success">ê²Œì‹œíŒ</button>
 </c:when>
 <c:otherwise>
-¾ÆÀÌµğ : <input name="memberId" id="memberId" placeholder="¾ÆÀÌµğ¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä">
-<br>
-ºñ¹Ğ¹øÈ£ :
-<input name="memberPw" id="memberPw" type="password">
-<button type="button" id="btnLogin">·Î±×ÀÎ</button><br>
-<button id="btnJoin">È¸¿ø°¡ÀÔ</button>
-<button id="btnFind">ID/PW Ã£±â</button>
+<div class="form-horizontal">
+<h3 class="text-center">ë¡œê·¸ì¸</h3>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">ID</label>
+    <div class="col-sm-10"style="width:700px">
+      <input type="text" name="memberId" class="form-control" id="memberId" placeholder="ID">
+    </div>
+  </div>
+  <br>
+  <div class="form-group">
+    <label  class="col-sm-2 control-label">Password</label>
+    <div class="col-sm-10" style="width:700px">
+      <input type="password" class="form-control" name="memberPw" id="memberPw" placeholder="Password">
+    </div>
+  </div>
+  <br>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button id="btnLogin" class="btn btn-default">Sign in</button>&nbsp;
+      <button id="btnJoin" class="btn btn-default">Join</button>&nbsp;
+      <button id="btnFind" class="btn btn-default">Find ID/PW</button>
+    </div>
+  </div>
+ </div>
 </c:otherwise>
 </c:choose>
 </form>

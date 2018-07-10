@@ -1,13 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-    
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>â€‹
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>°Ô½Ã±Û º¸±â</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ê²Œì‹œê¸€ ë³´ê¸°</title>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 	
 	$(document).ready(function(){
@@ -20,7 +23,7 @@
 		});
 		
 		$("#btnDelete").click(function(){
-			if(confirm("»èÁ¦ÇÏ½Ã°Ú½À´Ï±î?")){
+			if(confirm("ì‚­ì œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?")){
 				document.form1.action="${path}/board/delete.do";
 				document.form1.submit();
 			}
@@ -28,10 +31,14 @@
 		$("#btnUpdate").click(function(){
 			location.href = "${path}/board/modify.do?boardBno=${dto.boardBno}";
 				
-		})
+		});
+		
 		$("#toList").click(function(){
 			location.href = "${path}/board/list.do";
-		})
+		});
+		
+		
+		
 	})
 	
 	
@@ -44,7 +51,7 @@
 			url : "http://localhost:8080/reply/insert.do",
 			data : { boardBno : boardBno,replyText : replyText },
 			success : function(){
-				alert('´ñ±ÛÀÌ µî·ÏµÇ¾ú½À´Ï´Ù.');
+				alert('ëŒ“ê¸€ì´ ë“±ë¡ë˜ì—ˆìŠµë‹ˆë‹¤.');
 				listReply();
 			},
 	        error: function (request,status,error){
@@ -59,7 +66,6 @@
 		$.ajax({
 			method : 'get',
 			url : "http://localhost:8080/reply/list.do?replyBno=${dto.boardBno}",
-			
 			success : function(result) {
 				$("#listReply").html(result);	
 			},
@@ -78,9 +84,10 @@
 		$.ajax({
 			method:'post',
 			url:"http://localhost:8080/reply/insert.do",
+			contentType:"application/json; charset=utf-8",
 			data:{replyText : replyText, boardBno : boardBno},
 			success : function(){
-				alert('´ñ±ÛÀÌ µî·ÏµÇ¾ú½À´Ï´Ù.');
+				alert('ëŒ“ê¸€ì´ ë“±ë¡ë˜ì—ˆìŠµë‹ˆë‹¤.');
 				listReply();
 			},
 	        error: function (request,status,error){
@@ -105,38 +112,50 @@
 
 </head>
 <body>
-<h2>°Ô½Ã±Û º¸±â</h2>
+<jsp:include page="../main/menu.jsp" ></jsp:include>
+
+<h2 style="margin-left:50px">ê²Œì‹œê¸€ ë³´ê¸°</h2>
 <form name="form1" method="post">
-	<div>
-		ÀÛ¼ºÀÏÀÚ : ${dto.boardRegdate}
-	</div>
-	<div>
-		Á¶È¸¼ö : ${dto.boardViewcnt}
-	</div>
-	<div>
-		Á¦¸ñ : ${dto.boardTitle}
-	</div>
-	<div>
-		³»¿ë : ${dto.boardContent}
-	</div>
-	<div>
-		ÀÌ¸§ : ${dto.boardWriter}
-	</div>
+	<table style="margin-left:20px;width:800px;" class="table table-striped">
+		<tr>
+			<td style="width:200px">ì‘ì„±ì¼ì</td>
+			<td>${dto.boardRegdate}
+			</td>
+		</tr>
+		<tr>
+			<td style="width:200px">ì¡°íšŒìˆ˜</td>
+			<td>${dto.boardViewcnt}</td>
+		</tr>
+		<tr>
+			<td style="width:200px">ì œëª©</td>
+			<td>${dto.boardTitle}</td>
+		</tr>
+		<tr>
+			<td style="width:200px">ë‚´ìš©</td>
+			<td>${dto.boardContent}</td>
+		</tr>
+		
+		<tr>
+			<td style="width:200px">ì´ë¦„</td>
+			<td> ${dto.boardWriter}</td>
+		</tr>
+	</table>
+
 	<div>
 		<input type="hidden" name="boardBno" value="${dto.boardBno}">
 		<c:if test="${sessionScope.memberName == dto.boardWriter}">
-			<button type="button" id="btnUpdate">¼öÁ¤</button>
-			<button type="button" id = "btnDelete">»èÁ¦</button>
+			<button type="button"  style="margin-left:300px" id="btnUpdate" class="btn btn-success">ìˆ˜ì •</button>
+			<button type="button" id = "btnDelete" class="btn btn-success">ì‚­ì œ</button>
 		</c:if>
-		<button type="button" id="toList">¸ñ·ÏÀ¸·Î</button>
+		<button type="button" id="toList" class="btn btn-success">ëª©ë¡ìœ¼ë¡œ</button>
 	</div>
 </form>
 <div style="width:650px;text-align:center;">
 	<br>
 	<c:if test="${sessionScope.memberId != null}">
-		<textarea rows="5" cols="80" id="replyText" placeholder="´ñ±ÛÀ» ÀÛ¼ºÇØÁÖ¼¼¿ä"></textarea>
+		<textarea rows="5" style="margin-left:100px" cols="80" id="replyText" class="form-control" placeholder="ëŒ“ê¸€ì„ ì‘ì„±í•´ì£¼ì„¸ìš”"></textarea>
 		<br>
-		<button type="button" id="btnReply">´ñ±Û ÀÛ¼º</button>
+		<button type="button" id="btnReply" style="margin-left:150px" class="btn btn-success" >ëŒ“ê¸€ ì‘ì„±</button>
 	</c:if>
 </div>
 <div id="listReply"></div>

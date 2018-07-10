@@ -15,6 +15,14 @@
 				document.form1.submit();
 			}
 		});
+		
+
+		$("#btnToList").click(function(){
+			location.href = "${path}/board/list.do";
+		})
+		
+		
+		
 		$("#btnUpdete").click(function(){
             alert("수정되었습니다.");
             var title = $("#boardTitle").val();
@@ -67,6 +75,8 @@
 		<input type="hidden" name="boardBno" value="${dto.boardBno}">
 		<button type="button" id="btnUpdete">수정</button>
 		<button type="button" id = "btnDelete">삭제</button>
+		
+			<button type="button" id="btnToList">목록으로</button>
 	</div>
 </form>
 </body>
