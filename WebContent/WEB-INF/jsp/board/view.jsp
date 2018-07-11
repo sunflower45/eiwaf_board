@@ -7,6 +7,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>게시글 보기</title>
+<script type="text/javascript" src="/js/jquery/jquery-1.7.2.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="/js/eiwaf/eiwaf-1.0.0.js" charset="utf-8"></script>
+<script type="text/javascript" src="/js/util.comn.js" charset="utf-8"></script>
+<script type="text/javascript" src="/js/sample.comn.js" charset="utf-8"></script>
+<script type="text/javascript" src="/js/sample.menu.js" charset="utf-8"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.12.4.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
@@ -59,6 +64,8 @@
 
 	        }
 		})
+		var f = document.form1;
+		
 	}
 	
 	
@@ -152,7 +159,7 @@
 <div style="width:650px;text-align:center;">
 	<br>
 	<c:if test="${sessionScope.memberId != null}">
-		<textarea rows="5" style="margin-left:100px" cols="80" id="replyText" class="form-control" placeholder="댓글을 작성해주세요"></textarea>
+		<textarea rows="5" style="margin-left:100px" cols="80" name="replyText" id="replyText" class="form-control" placeholder="댓글을 작성해주세요"></textarea>
 		<br>
 		<button type="button" id="btnReply" style="margin-left:150px" class="btn btn-success" >댓글 작성</button>
 	</c:if>

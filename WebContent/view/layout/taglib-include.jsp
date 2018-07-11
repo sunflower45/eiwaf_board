@@ -1,4 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="net.e4net.eiwaf.common.*"%>
 <%@ page import="net.e4net.eiwaf.util.*"%>
 <%@ page import="net.e4net.eiwaf.web.*"%>

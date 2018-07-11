@@ -1,15 +1,21 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="/view/layout/taglib-include.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>È¸¿ø°¡ÀÔ</title>
-
+<title>íšŒì›ê°€ì…</title>
+<script type="text/javascript" src="/js/jquery/jquery-1.7.2.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="/js/eiwaf/eiwaf-1.0.0.js" charset="utf-8"></script>
+<script type="text/javascript" src="/js/util.comn.js" charset="utf-8"></script>
+<script type="text/javascript" src="/js/sample.comn.js" charset="utf-8"></script>
+<script type="text/javascript" src="/js/sample.menu.js" charset="utf-8"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.12.4.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
 <script type="text/javascript">
 
 $(document).on('click', '#toLogin', function(){
@@ -17,85 +23,85 @@ $(document).on('click', '#toLogin', function(){
 
 })
 $(document).ready(function () {
-	//[1] lblError ·¹ÀÌ¾î Å¬¸®¾î
+	//[1] lblError ë ˆì´ì–´ í´ë¦¬ì–´
     $('#memberPw').keyup(function () {
-        // $('#lblError').remove(); // Á¦°Å
-        $('#lblError').text(''); // Å¬¸®¾î
+        // $('#lblError').remove(); // ì œê±°
+        $('#lblError').text(''); // í´ë¦¬ì–´
     });
-    //[2] ¾ÏÈ£ È®ÀÎ ±â´É ±¸Çö
+    //[2] ì•”í˜¸ í™•ì¸ ê¸°ëŠ¥ êµ¬í˜„
     $('#memberPwCheck').keyup(function () {
         if ($('#memberPw').val() != $('#memberPwCheck').val()) {
-            $('#lblError').text(''); // Å¬¸®¾î
-            $('#lblError').html("<b>¾ÏÈ£°¡ Æ²¸³´Ï´Ù.</b>"); // ·¹ÀÌ¾î¿¡ HTML Ãâ·Â
+            $('#lblError').text(''); // í´ë¦¬ì–´
+            $('#lblError').html("<b>ì•”í˜¸ê°€ í‹€ë¦½ë‹ˆë‹¤.</b>"); // ë ˆì´ì–´ì— HTML ì¶œë ¥
         }
         else {
-            $('#lblError').text(''); // Å¬¸®¾î
-            $('#lblError').html("<b>¾ÏÈ£°¡ ¸Â½À´Ï´Ù.</b>"); // ·¹ÀÌ¾î¿¡ ÅØ½ºÆ® Ãâ·Â
+            $('#lblError').text(''); // í´ë¦¬ì–´
+            $('#lblError').html("<b>ì•”í˜¸ê°€ ë§ìŠµë‹ˆë‹¤.</b>"); // ë ˆì´ì–´ì— í…ìŠ¤íŠ¸ ì¶œë ¥
         }
     });
 
 });
 $(document).on('click', '#idCheck', function(){
-    	var memberId = $("#memberId").val();
-    	$.ajax({
-    		method : 'POST',
-    		async: true,
-    		data : {memberId : memberId},
-    		url : 'http://localhost:8080/member/idCheck.do',
-    		success : function(data){
-    			if(data.cnt == "1"){
-    				alert("¾ÆÀÌµğ°¡ Á¸ÀçÇÕ´Ï´Ù. ´Ù¸¥ ¾ÆÀÌµğ¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.");
-    				$("#memberId").focus();
-    			} else {
-    				alert("»ç¿ë °¡´ÉÇÑ ¾ÆÀÌµğÀÔ´Ï´Ù.");
-    				$("#memberPw").focus();
-    			} 
-    		},
-    		error : function(request,status,error){
-    			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-    		}
-    	})
+    	
+    	var f = document.form1;
+    	
+    	var result = svcf_Ajax("http://localhost:8080/member/idCheck.do", f, {
+    		async : false,
+    		procType : "R"
+    	});
+    	svcf_SyncCallbackFn(result, chkIdCallback);
 });
+
+function chkIdCallback(status, data){
+	if(data.cnt =="1"){
+		alert("ì•„ì´ë””ê°€ ì¡´ì¬í•©ë‹ˆë‹¤. ë‹¤ë¥¸ ì•„ì´ë””ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.");
+		$("#memberId").focus();
+	} else {
+
+		alert("ì‚¬ìš© ê°€ëŠ¥í•œ ì•„ì´ë””ì…ë‹ˆë‹¤.");
+		$("#memberPw").focus();
+	}
+}
 </script>
 </head>
 <body>
-<h1 style="margin-left:10px">È¸¿ø°¡ÀÔ ÆäÀÌÁö</h1>
-  <form id="form1" action="${path}/member/joinUpdate.do" method="post">
+<h1 style="margin-left:10px">íšŒì›ê°€ì… í˜ì´ì§€</h1>
+  <form id="form1" name="form1" action="${path}/member/joinUpdate.do" method="post">
 	<table class="table" style="margin-left:10px;width:800px;">
 		<tr>
-			<td>¾ÆÀÌµğ</td>
+			<td>ì•„ì´ë””</td>
 			<td><input class="form-control" type="text" id="memberId" name="memberId">
-			<button id="idCheck"class="btn btn-default"  style="margin-top:10px;" type="button">¾ÆÀÌµğ Áßº¹ °Ë»ç</button>
+			<button id="idCheck"class="btn btn-default"  style="margin-top:10px;" type="button">ì•„ì´ë”” ì¤‘ë³µ ê²€ì‚¬</button>
 			</td>
 			
 		</tr>
 		<tr>
-			<td>ºñ¹Ğ¹øÈ£</td>
+			<td>ë¹„ë°€ë²ˆí˜¸</td>
 			<td><input  class="form-control"  type="password" id="memberPw" name="memberPw"></td>
 		</tr>
 		
 		<tr>
-			<td>ºñ¹Ğ¹øÈ£ È®ÀÎ &nbsp;</td>
+			<td>ë¹„ë°€ë²ˆí˜¸ í™•ì¸ &nbsp;</td>
 			<td><input  class="form-control"  type="password" id="memberPwCheck" name="memberPwCheck">
 			<div style="margin-top:10px" id="lblError">
-					¾ÏÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä
+					ì•”í˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”
 			</div>
 			</td>
 			
 		</tr>
 		<tr>
-			<td>ÀÌ¸§</td>
+			<td>ì´ë¦„</td>
 			<td><input class="form-control"  type="text" id="memberName" name="memberName"></td>
 		</tr>
 		<tr>
-			<td>ÀÌ¸ŞÀÏ</td>
+			<td>ì´ë©”ì¼</td>
 			<td><input class="form-control"  type="text" name="memberEmail" id="memberEmail"></td>
 		</tr>
 		
 		<tr>
-			<td colspan="2" align="center"><button class="btn btn-default" type="submit" id="submitBtn" >°¡ÀÔÇÏ±â</button>&nbsp;&nbsp;&nbsp;
-			<input  class="btn btn-default" type="reset" value="´Ù½ÃÀÛ¼º">&nbsp;&nbsp;&nbsp;
-			<input class="btn btn-default" id="toLogin" type="button" value="·Î±×ÀÎ È­¸é">
+			<td colspan="2" align="center"><button class="btn btn-default" type="submit" id="submitBtn" >ê°€ì…í•˜ê¸°</button>&nbsp;&nbsp;&nbsp;
+			<input  class="btn btn-default" type="reset" value="ë‹¤ì‹œì‘ì„±">&nbsp;&nbsp;&nbsp;
+			<input class="btn btn-default" id="toLogin" type="button" value="ë¡œê·¸ì¸ í™”ë©´">
 			</td>
 			
 		</tr>

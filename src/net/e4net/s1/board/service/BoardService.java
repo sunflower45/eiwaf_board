@@ -35,6 +35,7 @@ public class BoardService extends TestService {
 		
 	}
 	
+	
 	public void update(BoardVO vo) throws Exception{
 		SqlSession = openSession(true);
 		SqlSession.update("BoardService.updateArticle", vo);
@@ -45,6 +46,7 @@ public class BoardService extends TestService {
 		SqlSession.delete("BoardService.deleteArticle", boardBno);
 	}
 
+	
 	@SuppressWarnings("unchecked")
 	public List<BoardVO> listAll(int start, int end,  String searchOption, String keyword) throws Exception{
 		SqlSession = openSession(true);
@@ -55,6 +57,8 @@ public class BoardService extends TestService {
 		map.put("end", end);
 		return (List<BoardVO>)SqlSession.selectList("BoardService.listAll", map);
 	}
+	
+	
 
 	public void increaseViewcnt(int boardBno, HttpSession session) throws Exception{
 		SqlSession = openSession(true);

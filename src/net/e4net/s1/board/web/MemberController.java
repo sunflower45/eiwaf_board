@@ -1,7 +1,6 @@
 package net.e4net.s1.board.web;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import net.e4net.eiwaf.common.Status;
+import net.e4net.eiwaf.web.RequestContext;
 import net.e4net.eiwaf.web.util.WebUtil;
 import net.e4net.s1.board.service.MemberService;
 import net.e4net.s1.board.vo.MemberVO;
@@ -29,68 +29,50 @@ public class MemberController extends PublicController {
 	MemberService memberService;
 	
 	@RequestMapping(value="idCheck.do", method=RequestMethod.POST)
-	public ModelAndView idCheck(HttpServletRequest request) throws Exception {
-		String id = request.getParameter("memberId");
-		MemberVO vo = new MemberVO();
-		vo.setMemberId(id);
+	public ModelAndView idCheck(@ModelAttribute("vo") MemberVO vo) throws Exception {
+		ModelAndView mav = new ModelAndView("jsonView");
+		
 		String idList = memberService.idCheck(vo);
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("jsonView");
 		mav.addObject("cnt", idList);
-		Status status = WebUtil.getAttributeStatus(request);
-		if (status.isOk()) {
-			return getOkModelAndView(mav, status);
-		} else {
-			return getFailModelAndView(mav, status);
-		}	
+		
+		
+		return getOkModelAndView(mav);
+		
 	}
+	
 	@RequestMapping("find.do")
 	public ModelAndView find(HttpServletRequest request) throws Exception{
-		ModelAndView mav = new ModelAndView();
+		ModelAndView mav = new ModelAndView("");
 		mav.setViewName("board/find");
 		Status status = WebUtil.getAttributeStatus(request);
 		if (status.isOk()) {
 			return getOkModelAndView(mav, status);
 		} else {
 			return getFailModelAndView(mav, status);
-		}
+		}		
 	}
 	
 	@RequestMapping(value="findId.do", method=RequestMethod.POST)
-	public ModelAndView findId(HttpServletRequest request)throws Exception {
-		String email = request.getParameter("memberEmail");
-		String name = request.getParameter("memberName");
-		MemberVO vo = new MemberVO();
-		vo.setMemberEmail(email);
-		vo.setMemberName(name);
-		String idList = memberService.findId(vo); 
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("jsonView");
-		mav.addObject("memberId", idList);
-		Status status = WebUtil.getAttributeStatus(request);
-		if (status.isOk()) {
-			return getOkModelAndView(mav, status);
-		} else {
-			return getFailModelAndView(mav, status);
-		}	
+	public ModelAndView findId(@ModelAttribute("vo") MemberVO vo)throws Exception {
+		ModelAndView mav = new ModelAndView("jsonView");
+		
+			String idList = memberService.findId(vo);
+			System.out.println("idList : "+idList);
+			mav.addObject("memberId", idList);
+			return getOkModelAndView(mav);
 	}
 	@RequestMapping(value="findPw.do", method=RequestMethod.POST)
-	public ModelAndView findPw(HttpServletRequest request) throws Exception{
-		String name = request.getParameter("memberName");
-		String id = request.getParameter("memberId");
-		MemberVO vo = new MemberVO();
-		vo.setMemberId(id);
-		vo.setMemberName(name);
-		String pwList = memberService.findPw(vo);
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("jsonView");
-		mav.addObject("memberPw", pwList);
-		Status status = WebUtil.getAttributeStatus(request);
-		if (status.isOk()) {
-			return getOkModelAndView(mav, status);
-		} else {
-			return getFailModelAndView(mav, status);
+	public ModelAndView findPw(@ModelAttribute("vo") MemberVO vo) throws Exception{
+		ModelAndView mav = new ModelAndView("jsonView");
+		try {
+			String pwList = memberService.findPw(vo);
+			mav.addObject("memberPw", pwList);
+			return getOkModelAndView(mav);
+		} catch(Exception e) {
+			mav.addObject("memberPw", null);
+			return getOkModelAndView(mav);
 		}
+		
 	}
 	@RequestMapping("loginCheck.do")
 	public ModelAndView loginCheck(@ModelAttribute MemberVO vo, HttpSession session, HttpServletRequest request) throws Exception {

@@ -6,31 +6,19 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+<script type="text/javascript" src="/js/eiwaf/eiwaf-1.0.0.js" charset="utf-8"></script>
 <script>
 $(document).on('click', '#btn', function(){
-	var id = $("#id").val();
-	$.ajax({
-		url:"http://localhost:8080/member/ajax.do",
-		contentType:"application/json; charset=utf-8",
-		method : "post",
-		type : "text",
-		data : {id : id},
-		success : function(data) {
-			alert("success"+data);
-			console.log(data.id);
-			$("#list").append(data.id);
-		},
-		error : function(request, status, error ){
-        	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 
-		}
+	svcf_Ajax("http://localhost:8080/member/ajax.do", data, {
+		callbackFn : fnListPageCallback
 	});
 	$("#id").val("");
 })
 </script>
 </head>
 <body>
-<form method="POST">
+<form method="POST" id="form1">
 	이름: <input type="text" id="id" /> <br/>
 	
 	<input type="button" id="btn" value="SEND">
