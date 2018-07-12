@@ -1,18 +1,24 @@
 package net.e4net.s1.board.web;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import net.e4net.eiwaf.common.Status;
@@ -29,6 +35,11 @@ public class BoardController extends PublicController {
 //	@Resource(name="BoardService")
 	@Autowired
 	BoardService boardService;
+	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
+	
+	
+	@Resource(name="uploadPath")
+    String uploadPath;
 	
 	
     @RequestMapping(value="list.do")
@@ -114,11 +125,32 @@ public class BoardController extends PublicController {
        
      
     @RequestMapping(value="insert.do", method=RequestMethod.POST)
-    public ModelAndView insert(@ModelAttribute BoardVO vo, HttpSession session) throws Exception{
+    public ModelAndView insert(@RequestParam String boardTitle, @RequestParam String boardContent, @RequestParam MultipartFile file, HttpServletRequest request, HttpSession session) throws Exception{
+    	logger.info("파일 이름 : "+file.getOriginalFilename());
+    	logger.info("파일 크기 : "+file.getSize());
+    	logger.info("컨텐트 타입 : "+file.getContentType());
+    	
+    	String savedName = file.getOriginalFilename();
+    	File target = new File(uploadPath, savedName);
+    	
+    	FileCopyUtils.copy(file.getBytes(), target);
+    	
+    	ModelAndView mav = new ModelAndView("redirect:/board/list.do");
+    	
+    	mav.addObject("savedName", savedName);
+    	BoardVO vo = new BoardVO();
     	String writer = (String)session.getAttribute("memberId");
     	vo.setBoardWriter(writer);
-    	boardService.create(vo);
-    	return getOkModelAndView("redirect:/board/list.do");
+    	vo.setBoardContent(boardContent);
+    	vo.setBoardTitle(boardTitle);
+    	
+    	boardService.create(vo, request);
+    	Status status = WebUtil.getAttributeStatus(request);
+    	if(status.isOk()) {
+    		return getOkModelAndView(mav, status);
+    	} else {
+    		return getFailModelAndView(mav, status);
+    	}
     }
     
     

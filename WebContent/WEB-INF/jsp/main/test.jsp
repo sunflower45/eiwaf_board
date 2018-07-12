@@ -8,22 +8,14 @@
 <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 <script type="text/javascript" src="/js/eiwaf/eiwaf-1.0.0.js" charset="utf-8"></script>
 <script>
-$(document).on('click', '#btn', function(){
 
-	svcf_Ajax("http://localhost:8080/member/ajax.do", data, {
-		callbackFn : fnListPageCallback
-	});
-	$("#id").val("");
-})
 </script>
 </head>
 <body>
-<form method="POST" id="form1">
-	이름: <input type="text" id="id" /> <br/>
-	
-	<input type="button" id="btn" value="SEND">
-</form>
-<ul id="list"></ul>
-
+    <form action="${path}/upload.do" method="post" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <input type="text" name="name">
+        <input type="submit" value="업로드">    
+    </form>
 </body>
 </html>

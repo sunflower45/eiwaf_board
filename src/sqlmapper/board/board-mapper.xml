@@ -49,6 +49,9 @@
 		DELETE FROM tbl_board
 		WHERE board_bno = #{boardBno}
 	</delete>
+
+
+
 	<sql id="search">
     <choose>
         <!-- 검색옵션이 전체 검색일 경우 -->
@@ -71,6 +74,6 @@
         ) A
     ) WHERE rn BETWEEN #{start} AND #{end}
 </sql>
- 
+
 
 </mapper>

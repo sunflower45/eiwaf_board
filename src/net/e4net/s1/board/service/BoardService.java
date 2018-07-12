@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
@@ -37,7 +38,7 @@ public class BoardService extends TestService {
 		}
 		
 	}
-	public void create(BoardVO vo) throws Exception {
+	public void create(BoardVO vo, HttpServletRequest request) throws Exception {
 		SqlSession = null;
 		try {
 			SqlSession = openSession(true);

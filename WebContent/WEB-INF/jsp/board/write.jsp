@@ -38,16 +38,22 @@
 </head>
 <body style="margin-left:20px">
 <h2>게시글 작성</h2>
-<form name="form1" method="post" action="${path}/board/insert.do">
+<form name="form1" method="post" enctype="multipart/form-data" action="${path}/board/insert.do">
 
 	<table class="table" style="width:800px">
 		<tr>
 			<td>제목</td>
-			<td><input name="boardTitle" class="form-control"  id="boardTitle" size="80" placeholder="제목을 입력해 주세요"></td>
+			<td><input name="boardTitle" class="form-control" name="boardTitle" id="boardTitle" size="80" placeholder="제목을 입력해 주세요"></td>
 		</tr>
 		<tr>
 			<td>내용</td>
-			<td><textarea name="boardContent" class="form-control"  id="boardContent" rows="4" cols="80" placeholder="내용을 입력해 주세요"></textarea></td>
+			<td><textarea name="boardContent" class="form-control" name="boardContent" id="boardContent" rows="4" cols="80" placeholder="내용을 입력해 주세요"></textarea></td>
+		</tr>
+		<tr>
+			<td>파일 업로드</td>
+			<td>
+				<input type="file" class="file" name="file" placeholder="파일 선택">
+			</td>
 		</tr>
 		<tr>
 			<td>이름</td>

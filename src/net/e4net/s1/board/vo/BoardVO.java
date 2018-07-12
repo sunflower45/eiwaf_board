@@ -13,6 +13,8 @@ public class BoardVO {
     private int boardViewcnt;        // 게시글 조회수
     private int boardReplyCnt;
     
+
+    
     public int getBoardReplyCnt() {
 		return boardReplyCnt;
 	}
@@ -60,6 +62,6 @@ public class BoardVO {
     @Override
     public String toString() {
         return "BoardVO [boardBno=" + boardBno + ", boardTitle=" + boardTitle + ", boardContent=" + boardContent + ", boardWriter=" + boardWriter + ", boardRegdate="
-                + boardRegdate + ", boardViewcnt=" + boardViewcnt + ", ==" +  "]";
+                + boardRegdate + ", boardViewcnt=" + boardViewcnt + ", =" +  "]";
     }
 }

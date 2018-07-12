@@ -78,9 +78,7 @@ public class MemberController extends PublicController {
 	
 	@RequestMapping(value="update.do")
 	public ModelAndView memberUpdate(@ModelAttribute MemberVO vo, HttpServletRequest request) throws Exception {
-		System.out.println("1111111111111");
 		memberService.updateMember(vo);
-		System.out.println("2222222222");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("redirect:/member/admin.do");
 		Status status = WebUtil.getAttributeStatus(request);
