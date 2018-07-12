@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -44,7 +44,7 @@ function showReplyModify(replyRno){
 				
 				<c:if test="${sessionScope.memberId==row.replyer}">
 					<div style="float:right;vertical-align:middle;">
-						<input type="button" id="btnModify" class="btn btn-default" value="¼öÁ¤" onclick="showReplyModify('${row.replyRno}')">
+						<input type="button" id="btnModify" class="btn btn-default" value="ìˆ˜ì •" onclick="showReplyModify('${row.replyRno}')">
 					</div>
 				</c:if>
 			</td>

@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -7,14 +7,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 </head>
 <body>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="${path}/board/list.do" style="margin-top:10px">°Ô½ÃÆÇ</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="${path}/board/list.do" style="margin-top:10px">ê²Œì‹œíŒ</a>
 <c:choose>
 	<c:when test="${sessionScope.memberId != null}">
-		<a href="${path}/member/logout.do">·Î±×¾Æ¿ô</a>		
-		<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${sessionScope.memberId }´ÔÀÌ ·Î±×ÀÎÁßÀÔ´Ï´Ù.
+		<c:if test="${sessionScope.memberId == 'admin' }">
+			<a href="${path}/member/admin.do">íšŒì›ê´€ë¦¬</a>
+		</c:if>	
+		<a href="${path}/member/logout.do">ë¡œê·¸ì•„ì›ƒ</a>
+			
+		<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${sessionScope.memberId }ë‹˜ì´ ë¡œê·¸ì¸ì¤‘ì…ë‹ˆë‹¤.
 	</c:when>
 	<c:otherwise>
-		<a href="${path}/main.do">·Î±×ÀÎ</a>
+		<a href="${path}/main.do">ë¡œê·¸ì¸</a>
 	</c:otherwise>
 </c:choose>
 </body>

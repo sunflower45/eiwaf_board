@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -15,33 +15,27 @@ $("#btnReplyUpdate").click(function(){
 });
 
 function replyUpdate(){
-	var replyText = $("#replyText2").val();
-	var replyRno = $("#replyRno").val();
-	console.log("replyRno : "+replyRno);
-	console.log("replyText : "+replyText);
-	$.ajax({
-		method:'post',
-		url : "http://localhost:8080/reply/update.do",
-		data : {replyText : replyText, replyRno : replyRno},
-		success : function(result){
-			console.log(result);
-			$("#modifyReply").css("visibility", "hidden");
-			listReply();
-		},
-        error: function (request,status,error){
-        	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	
+	var f = document.form1;
+	var result = svcf_Ajax("http://localhost:8080/reply/update.do", f, {
+		async:false,
+		procType : "R"
+	});
+	svcf_SyncCallbackFn(result, replyUpdateCallback);
+}
 
-        }
-	})
+function replyUpdateCallback(status, data){
+	$("#modifyReply").css("visibility", "hidden");
+	listReply();
 }
 $("#btnReplyDelete").click(function(){
-	if(confirm("»èÁ¦ÇÏ½Ã°Ú½À´Ï±î?")){
+	if(confirm("ì‚­ì œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?")){
 		$.ajax({
 			method : 'delete',
 			url : "http://localhost:8080/reply/delete.do?replyRno=${vo.replyRno}",
 			success : function(result){
 				console.log(result);
-				alert("»èÁ¦µÇ¾ú½À´Ï´Ù.");
+				alert("ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤.");
 				$("#modifyReply").css("visibility", "hidden");
 				listReply();
 			},
@@ -59,19 +53,20 @@ $("#btnReplyClose").click(function(){
 </script>
 </head>
 <body>
-´ñ±Û ¹øÈ£ : ${vo.replyRno }<br>
-<textarea style="width:400px" class="form-control" id="replyText2" name="replyText2" rows="5" cols="82">
+ëŒ“ê¸€ ë²ˆí˜¸ : ${vo.replyRno }<br>
+<form name="form1">
+<textarea style="width:400px" class="form-control" id="replyText" name="replyText" rows="5" cols="82">
 	${vo.replyText}
 </textarea>
 <input type="hidden" name="replyRno" id = "replyRno" value="${vo.replyRno}">
-
 <div>
 	<c:if test="${sessionScope.memberId == vo.replyer }">
-		<button style="margin-top:10px" class="btn btn-success btn-xs" type="button" id="btnReplyUpdate">¼öÁ¤</button>
-		<button style="margin-top:10px"  class="btn btn-success btn-xs"type="button" id="btnReplyDelete">»èÁ¦</button>
+		<button style="margin-top:10px" class="btn btn-success btn-xs" type="button" id="btnReplyUpdate">ìˆ˜ì •</button>
+		<button style="margin-top:10px"  class="btn btn-success btn-xs"type="button" id="btnReplyDelete">ì‚­ì œ</button>
 
 	</c:if>
-	<button style="margin-top:10px"  class="btn btn-success btn-xs" type="button" id="btnReplyClose">´İ±â</button>
+	<button style="margin-top:10px"  class="btn btn-success btn-xs" type="button" id="btnReplyClose">ë‹«ê¸°</button>
 </div>
+</form>
 </body>
 </html>

@@ -24,7 +24,7 @@
 </head>
 <body style="margin-top:10px;margin-left:20px">
 <jsp:include page="../main/menu.jsp" ></jsp:include>
-	<h1 style="margin-left:250px">게시글 목록</h1>
+	<h2 style="margin-left:250px">게시글 목록</h2>
 	<form name="form1" method="post" action="${path}/board/list.do">
 
 	<table>

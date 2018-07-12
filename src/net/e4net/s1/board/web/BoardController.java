@@ -110,6 +110,7 @@ public class BoardController extends PublicController {
     		return getFailModelAndView(mav, status);
     	}
     }
+    
        
      
     @RequestMapping(value="insert.do", method=RequestMethod.POST)

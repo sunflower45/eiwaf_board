@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import net.e4net.s1.board.vo.ReplyVO;
 import net.e4net.s1.comn.TestService;
@@ -15,31 +16,86 @@ public class ReplyService extends TestService{
 	@SuppressWarnings("unchecked")
 	public List<ReplyVO> list(int replyBno){
 		SqlSession = null;
-		SqlSession = openSession(true);
-		return (List<ReplyVO>) SqlSession.selectList("reply.listReply", replyBno);
+		try {
+			SqlSession = openSession(true);
+			List<ReplyVO> vo = SqlSession.selectList("reply.listReply", replyBno);
+			SqlSession.commit();
+			return vo;
+		} catch (Exception e) {
+			e.printStackTrace();
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			return null;
+		} finally {
+			if(SqlSession != null) SqlSession.close();
+		}
 	}
 	
 	public void create(ReplyVO vo) {
 		SqlSession = null;
-		SqlSession = openSession(true);
-		SqlSession.insert("reply.insertReply", vo);
+		try {
+			SqlSession = openSession(true);
+			SqlSession.insert("reply.insertReply", vo);
+			SqlSession.commit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			
+		} finally {
+			if(SqlSession != null) SqlSession.close();
+		}
+		
 	}
 	
 	public void update(ReplyVO vo) {
 		SqlSession = null;
-		SqlSession = openSession(true);
-		SqlSession.update("reply.updateReply", vo);
+		try {
+			SqlSession = openSession(true);
+			SqlSession.update("reply.updateReply", vo);
+			SqlSession.commit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			
+		} finally {
+			if(SqlSession != null) SqlSession.close();
+		}
+		
 	}
 	
 	public void delete(int replyRno) {
 		SqlSession = null;
-		SqlSession = openSession(true);
-		SqlSession.update("reply.deleteReply", replyRno);		
+		try {
+			SqlSession = openSession(true);
+			SqlSession.update("reply.deleteReply", replyRno);		
+			SqlSession.commit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			
+		} finally {
+			if(SqlSession != null) SqlSession.close();
+		}
 	}
 	
 	public ReplyVO detail(int replyRno) {
+		
 		SqlSession = null;
-		SqlSession = openSession(true);
-		return (ReplyVO) SqlSession.selectOne("reply.detailReply", replyRno);
+		try {
+			SqlSession = openSession(true);
+			ReplyVO vo = (ReplyVO) SqlSession.selectOne("reply.detailReply", replyRno);
+			SqlSession.commit();
+
+			return vo;
+		} catch (Exception e) {
+			e.printStackTrace();
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			return null;
+		} finally {
+			if(SqlSession != null) SqlSession.close();
+		}
+		
 	}
 }

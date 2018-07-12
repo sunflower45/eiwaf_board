@@ -29,6 +29,9 @@ $(document).ready(function(){
 	$("#btnBoard").click(function(){
 		document.form1.action="${path}/board/list.do";
 	});
+	$("#btnMemberAdmin").click(function(){
+		document.form1.action="${path}/member/admin.do";
+	})
 });
 </script>
 <title>메인 페이지</title>
@@ -45,6 +48,9 @@ $(document).ready(function(){
 	닉네임 : ${memberName}<br><br>
 	<button id="btnLogout" class="btn btn-success">로그아웃</button>
 	<button id="btnBoard" class="btn btn-success">게시판</button>
+	<c:if test="${memberId == 'admin' }">
+		<button id="btnMemberAdmin" class="btn btn-success">회원 관리</button>
+	</c:if>
 </c:when>
 <c:otherwise>
 <div class="form-horizontal">

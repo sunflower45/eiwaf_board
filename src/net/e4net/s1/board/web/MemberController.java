@@ -1,5 +1,7 @@
 package net.e4net.s1.board.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -7,13 +9,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import net.e4net.eiwaf.common.Status;
-import net.e4net.eiwaf.web.RequestContext;
 import net.e4net.eiwaf.web.util.WebUtil;
 import net.e4net.s1.board.service.MemberService;
 import net.e4net.s1.board.vo.MemberVO;
@@ -27,6 +30,92 @@ public class MemberController extends PublicController {
 	
 	@Autowired
 	MemberService memberService;
+	
+	@RequestMapping(value="admin.do")
+	public ModelAndView admin(HttpServletRequest request) throws Exception {
+		List<MemberVO> list = memberService.memberList();
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("board/admin");
+		mav.addObject("list", list);
+		
+		Status status = WebUtil.getAttributeStatus(request);
+		if (status.isOk()) {
+			return getOkModelAndView(mav, status);
+		} else {
+			return getFailModelAndView(mav, status);
+		}	
+		
+	}
+	
+	@RequestMapping(value="view.do")
+	public ModelAndView memberView(@RequestParam String memberId,HttpServletRequest request) throws Exception {
+		MemberVO dto = memberService.memberRead(memberId);
+    	ModelAndView mav = new ModelAndView();
+    	mav.setViewName("board/memberView");
+    	mav.addObject("dto", dto);
+    	Status status = WebUtil.getAttributeStatus(request);
+    	if(status.isOk()) {
+    		return getOkModelAndView(mav, status);
+    	} else {
+    		return getFailModelAndView(mav, status);
+    	}
+	}
+	
+	@RequestMapping(value="delete.do")
+	public ModelAndView memberDelete(@RequestParam String memberId, Model model, HttpServletRequest request) throws Exception {
+		memberService.deleteMember(memberId);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:/member/admin.do");
+		
+		Status status = WebUtil.getAttributeStatus(request);
+    	if(status.isOk()) {
+    		return getOkModelAndView(mav, status);
+    	} else {
+    		return getFailModelAndView(mav, status);
+    	}
+	}
+	
+	@RequestMapping(value="update.do")
+	public ModelAndView memberUpdate(@ModelAttribute MemberVO vo, HttpServletRequest request) throws Exception {
+		System.out.println("1111111111111");
+		memberService.updateMember(vo);
+		System.out.println("2222222222");
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:/member/admin.do");
+		Status status = WebUtil.getAttributeStatus(request);
+    	if(status.isOk()) {
+    		return getOkModelAndView(mav, status);
+    	} else {
+    		return getFailModelAndView(mav, status);
+    	}
+		
+	}
+	@RequestMapping(value="adminWrite.do")
+	public ModelAndView adminWrite(HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("board/adminWrite");
+		Status status = WebUtil.getAttributeStatus(request);
+		if (status.isOk()) {
+			return getOkModelAndView(mav, status);
+		} else {
+			return getFailModelAndView(mav, status);
+		}	
+		
+	}
+	
+	@RequestMapping(value="insert.do")
+	public ModelAndView memberInsert(@ModelAttribute MemberVO vo, HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:/member/admin.do");
+		memberService.insertMember(vo);
+		Status status = WebUtil.getAttributeStatus(request);
+		if (status.isOk()) {
+			return getOkModelAndView(mav, status);
+		} else {
+			return getFailModelAndView(mav, status);
+		}	
+	}
 	
 	@RequestMapping(value="idCheck.do", method=RequestMethod.POST)
 	public ModelAndView idCheck(@ModelAttribute("vo") MemberVO vo) throws Exception {

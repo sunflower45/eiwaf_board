@@ -1,10 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>°Ô½Ã±Û º¸±â</title>
+<title>ê²Œì‹œê¸€ ë³´ê¸°</title>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.12.4.min.js"></script>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -15,7 +15,7 @@
 	
 	$(document).ready(function(){
 		$("#btnDelete").click(function(){
-			if(confirm("»èÁ¦ÇÏ½Ã°Ú½À´Ï±î?")){
+			if(confirm("ì‚­ì œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?")){
 				document.form1.action="${path}/board/delete.do";
 				document.form1.submit();
 			}
@@ -29,62 +29,62 @@
 		
 		
 		$("#btnUpdete").click(function(){
-            alert("¼öÁ¤µÇ¾ú½À´Ï´Ù.");
+            alert("ìˆ˜ì •ë˜ì—ˆìŠµë‹ˆë‹¤.");
             var title = $("#boardTitle").val();
             var content = $("#boardContent").val();
             var writer = $("#boardWriter").val();
             if(title == ""){
-                alert("Á¦¸ñÀ» ÀÔ·ÂÇÏ¼¼¿ä");
+                alert("ì œëª©ì„ ì…ë ¥í•˜ì„¸ìš”");
                 document.form1.title.focus();
                 return;
             }
             if(content == ""){
-                alert("³»¿ëÀ» ÀÔ·ÂÇÏ¼¼¿ä");
+                alert("ë‚´ìš©ì„ ì…ë ¥í•˜ì„¸ìš”");
                 document.form1.content.focus();
                 return;
             }
             if(writer == ""){
-                alert("ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä");
+                alert("ì´ë¦„ì„ ì…ë ¥í•˜ì„¸ìš”");
                 document.form1.writer.focus();
                 return;
             }
             document.form1.action="${path}/board/update.do"
-            // Æû¿¡ ÀÔ·ÂÇÑ µ¥ÀÌÅÍ¸¦ ¼­¹ö·Î Àü¼Û
+            // í¼ì— ì…ë ¥í•œ ë°ì´í„°ë¥¼ ì„œë²„ë¡œ ì „ì†¡
             document.form1.submit();
         });
 	})
 </script>
 </head>
 <body style="margin-left:20px">
-<h2>°Ô½Ã±Û º¸±â</h2>
+<h2>ê²Œì‹œê¸€ ë³´ê¸°</h2>
 <form name="form1" method="post">
 <table class="table" style="width:800px">
 	<tr>
-		<td>ÀÛ¼ºÀÏÀÚ</td>
+		<td>ì‘ì„±ì¼ì</td>
 		<td>${dto.boardRegdate}</td>
 	</tr>
 	<tr>
-		<td>Á¶È¸¼ö</td>
+		<td>ì¡°íšŒìˆ˜</td>
 		<td>${dto.boardViewcnt}</td>
 	</tr>
 	<tr>
-		<td>Á¦¸ñ</td>
-		<td><input name="boardTitle" class="form-control" id="boardTitle" size="80" value="${dto.boardTitle}" placeholder="Á¦¸ñÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä"></td>
+		<td>ì œëª©</td>
+		<td><input name="boardTitle" class="form-control" id="boardTitle" size="80" value="${dto.boardTitle}" placeholder="ì œëª©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”"></td>
 	</tr>
 	<tr>
-		<td>³»¿ë</td>
-		<td><textarea name="boardContent"  class="form-control" id="boardContent" rows="4" cols="80" placeholder="³»¿ëÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä">${dto.boardContent}</textarea></td>
+		<td>ë‚´ìš©</td>
+		<td><textarea name="boardContent"  class="form-control" id="boardContent" rows="4" cols="80" placeholder="ë‚´ìš©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”">${dto.boardContent}</textarea></td>
 	</tr>
 	<tr>
-		<td>ÀÌ¸§</td>
+		<td>ì´ë¦„</td>
 		<td>${dto.boardWriter}</td>
 	</tr>
 </table>
 	<div>
 		<input type="hidden" name="boardBno" value="${dto.boardBno}">
-		<button type="button" id="btnUpdete" class="btn btn-success">¼öÁ¤</button>
-		<button type="button" id = "btnDelete" class="btn btn-success">»èÁ¦</button>
-		<button type="button" id="btnToList" class="btn btn-success">¸ñ·ÏÀ¸·Î</button>
+		<button type="button" id="btnUpdete" class="btn btn-success">ìˆ˜ì •</button>
+		<button type="button" id = "btnDelete" class="btn btn-success">ì‚­ì œ</button>
+		<button type="button" id="btnToList" class="btn btn-success">ëª©ë¡ìœ¼ë¡œ</button>
 	</div>
 </form>
 </body>

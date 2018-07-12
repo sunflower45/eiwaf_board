@@ -3,10 +3,10 @@ package net.e4net.s1.board.web;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 import net.e4net.eiwaf.common.Status;
 import net.e4net.eiwaf.web.util.WebUtil;
 import net.e4net.s1.board.service.ReplyService;
+import net.e4net.s1.board.vo.BoardVO;
+import net.e4net.s1.board.vo.MemberVO;
 import net.e4net.s1.board.vo.ReplyVO;
 import net.e4net.s1.comn.PublicController;
 
@@ -27,26 +29,14 @@ public class ReplyController extends PublicController {
 	ReplyService replyService;
 	
 	@RequestMapping(value="insert.do", method=RequestMethod.POST)
-	public ModelAndView insert( ReplyVO vo, HttpSession session, HttpServletRequest request) {
-
-		String memberId = (String)session.getAttribute("memberId");
-		vo.setReplyer(memberId);
-		
-		int replyBno = Integer.parseInt(request.getParameter("boardBno"));
-		
-		String replyText = request.getParameter("replyText");
-		vo.setReplyBno(replyBno);
-		vo.setReplyText(replyText);
-		replyService.create(vo);
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("jsonView");
-		Status status = WebUtil.getAttributeStatus(request);
-		if(status.isOk()) {
-    		return getOkModelAndView(mav, status);
-    	} else {
-    		return getFailModelAndView(mav, status);
-    	}
+	public ModelAndView insert(@ModelAttribute("rvo") ReplyVO rvo, @ModelAttribute("bvo") BoardVO bvo) {
+		ModelAndView mav = new ModelAndView("jsonView");
+		rvo.setReplyBno(bvo.getBoardBno());
+		replyService.create(rvo);
+		return getOkModelAndView(mav);
+    	
 	}
+	
 	@RequestMapping(value="list.do", method=RequestMethod.GET)
 	public ModelAndView list(@RequestParam int replyBno, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
@@ -84,24 +74,11 @@ public class ReplyController extends PublicController {
 
 	
 	@RequestMapping(value="update.do", method= {RequestMethod.POST, RequestMethod.GET})
-	public ModelAndView replyUpdate(ReplyVO vo, HttpServletRequest request) {
-		int replyRno = Integer.parseInt(request.getParameter("replyRno"));
-		String replyText =  request.getParameter("replyText");
-		
-		System.out.println("replyRno : "+replyRno+" replyText : "+replyText);
-		vo.setReplyRno(replyRno);
-		vo.setReplyText(replyText);
+	public ModelAndView replyUpdate(@ModelAttribute("vo") ReplyVO vo) {
+		ModelAndView mav = new ModelAndView("jsonView");
 		replyService.update(vo);
-
-		ModelAndView mav = new ModelAndView();
 		mav.addObject("vo", vo);
-		mav.setViewName("jsonView");
-		Status status = WebUtil.getAttributeStatus(request);
-		if(status.isOk()) {
-    		return getOkModelAndView(mav, status);
-    	} else {
-    		return getFailModelAndView(mav, status);
-    	}
+		return getOkModelAndView(mav);
 	
 }
 	

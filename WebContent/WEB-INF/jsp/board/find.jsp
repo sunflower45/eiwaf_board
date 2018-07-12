@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>È¸¿øÁ¤º¸ Ã£±â</title>
+<title>íšŒì›ì •ë³´ ì°¾ê¸°</title>
 <script type="text/javascript" src="/js/jquery/jquery-1.7.2.min.js" charset="utf-8"></script>
 <script type="text/javascript" src="/js/eiwaf/eiwaf-1.0.0.js" charset="utf-8"></script>
 <script type="text/javascript" src="/js/util.comn.js" charset="utf-8"></script>
@@ -35,7 +35,7 @@ $(document).on('click','#findId',function(){
 	$("#memberEmail").val("");
 });
 function idFindActionCallback(status, data){
-	alert("È¸¿ø´ÔÀÇ Á¤º¸·Î µî·ÏµÈ ¾ÆÀÌµğ´Â : "+data.memberId+" ÀÔ´Ï´Ù.");
+	alert("íšŒì›ë‹˜ì˜ ì •ë³´ë¡œ ë“±ë¡ëœ ì•„ì´ë””ëŠ” : "+data.memberId+" ì…ë‹ˆë‹¤.");
 
 }
 $(document).on('click','#findPw',function(){
@@ -53,27 +53,27 @@ $(document).on('click','#findPw',function(){
 });
 
 function pwFindActionCallback(status, data){
-	alert("È¸¿ø´ÔÀÇ Á¤º¸·Î µî·ÏµÈ ¾ÆÀÌµğ´Â : "+data.memberPw+" ÀÔ´Ï´Ù.");
+	alert("íšŒì›ë‹˜ì˜ ì •ë³´ë¡œ ë“±ë¡ëœ ì•„ì´ë””ëŠ” : "+data.memberPw+" ì…ë‹ˆë‹¤.");
 
 }
 </script>
 </head>
 <body>
-<h1 style="margin-left:50px">È¸¿øÁ¤º¸ Ã£±â</h1>
+<h1 style="margin-left:50px">íšŒì›ì •ë³´ ì°¾ê¸°</h1>
 
 <form id="form1" name="form1" method="post">
 	<table style="width:400px" class="table">
 		<tr>
-			<td for="text">ÀÌ¸§</td>
+			<td for="text">ì´ë¦„</td>
 			<td><input class="form-control" type="text" id="memberName1" name="memberName"></td>
 		</tr>
 		
 		<tr>
-			<td for="text">ÀÌ¸ŞÀÏ</td>
+			<td for="text">ì´ë©”ì¼</td>
 			<td><input class="form-control"  type="text" id="memberEmail" name="memberEmail"></td>
 		</tr>
 		<tr>
-			<td><input type="button" class="btn btn-default" id="findId" value="¾ÆÀÌµğ Ã£±â">
+			<td><input type="button" class="btn btn-default" id="findId" value="ì•„ì´ë”” ì°¾ê¸°">
 			</td>
 			<td></td>
 		</tr>
@@ -86,22 +86,22 @@ function pwFindActionCallback(status, data){
 <br><br><br>
 	<table style="width:400px" class="table">
 		<tr>
-			<td for="text">ÀÌ¸§</td>
+			<td for="text">ì´ë¦„</td>
 			<td><input class="form-control"  type="text" id="memberName2" name="memberName"></td>
 		</tr>
 		
 		<tr>
-			<td for="text">¾ÆÀÌµğ</td>
+			<td for="text">ì•„ì´ë””</td>
 			<td><input class="form-control"  type="text" id="memberId" name="memberId"></td>
 		</tr>
 		<tr>
-			<td><input type="button"  class="btn btn-default" id="findPw" value="ºñ¹Ğ¹øÈ£ Ã£±â">
+			<td><input type="button"  class="btn btn-default" id="findPw" value="ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸°">
 			</td>
 			<td></td>
 		</tr>
 	</table>
 </form>
 
-<input style="margin-left:150px" type="button"  class="btn btn-default" id="toLogin" value="·Î±×ÀÎ È­¸é">
+<input style="margin-left:150px" type="button"  class="btn btn-default" id="toLogin" value="ë¡œê·¸ì¸ í™”ë©´">
 </body>
 </html>

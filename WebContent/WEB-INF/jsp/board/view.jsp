@@ -49,23 +49,17 @@
 	
 	
 	function replyJson(){
-		var replyText = $("#replyText").val();
-		var boardBno = "${dto.boardBno}";
-		$.ajax({
-			method:"post",
-			url : "http://localhost:8080/reply/insert.do",
-			data : { boardBno : boardBno,replyText : replyText },
-			success : function(){
-				alert('댓글이 등록되었습니다.');
-				listReply();
-			},
-	        error: function (request,status,error){
-	        	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-
-	        }
-		})
-		var f = document.form1;
 		
+		var f = document.form1;
+		var result = svcf_Ajax("http://localhost:8080/reply/insert.do", f, {
+			async : false,
+			procType : "R"
+		});
+		svcf_SyncCallbackFn(result, replyJsonCallback);
+	}
+	function replyJsonCallback(status, data){
+		alert('댓글이 등록되었습니다.');
+		listReply();
 	}
 	
 	
@@ -83,25 +77,7 @@
 		})
 	}
 	 
-	 
-	 function reply(){
-		var replyText = $("#replyText").val();
-		var boardBno = "${dto.boardBno}";
-		//var param = "replyText="+replyText+"&boardBno="+boardBno;
-		$.ajax({
-			method:'post',
-			url:"http://localhost:8080/reply/insert.do",
-			data:{replyText : replyText, boardBno : boardBno},
-			success : function(){
-				alert('댓글이 등록되었습니다.');
-				listReply();
-			},
-	        error: function (request,status,error){
-	        	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 
-	        }
-		})
-	}
 	
     function changeDate(date){
         date = new Date(parseInt(date));
@@ -149,14 +125,15 @@
 
 	<div>
 		<input type="hidden" name="boardBno" value="${dto.boardBno}">
+		<input type="hidden" name="replyer" value="${sessionScope.memberName}">
 		<c:if test="${sessionScope.memberName == dto.boardWriter}">
 			<button type="button"  style="margin-left:300px" id="btnUpdate" class="btn btn-success">수정</button>
 			<button type="button" id = "btnDelete" class="btn btn-success">삭제</button>
 		</c:if>
 		<button type="button" id="toList" class="btn btn-success">목록으로</button>
 	</div>
-</form>
 <div style="width:650px;text-align:center;">
+
 	<br>
 	<c:if test="${sessionScope.memberId != null}">
 		<textarea rows="5" style="margin-left:100px" cols="80" name="replyText" id="replyText" class="form-control" placeholder="댓글을 작성해주세요"></textarea>
@@ -164,6 +141,8 @@
 		<button type="button" id="btnReply" style="margin-left:150px" class="btn btn-success" >댓글 작성</button>
 	</c:if>
 </div>
+</form>
+
 <div id="listReply"></div>
 </body>
 </html>

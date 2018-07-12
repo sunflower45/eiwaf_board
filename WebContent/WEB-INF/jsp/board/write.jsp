@@ -1,10 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>°Ô½Ã±Û ÀÛ¼º</title>
+<title>ê²Œì‹œê¸€ ì‘ì„±</title>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.12.4.min.js"></script>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -18,12 +18,12 @@
 			var content = $("#boardContent").val();
 			var writer = $("#boardWriter").val();
 			if(title == ""){
-				alert("Á¦¸ñÀ» ÀÔ·ÂÇÏ¼¼¿ä");
+				alert("ì œëª©ì„ ì…ë ¥í•˜ì„¸ìš”");
 				document.form1.boardTitle.focus();
 				return;
 			}
 			if(content == ""){
-				alert("³»¿ëÀ» ÀÔ·ÂÇÏ¼¼¿ä");
+				alert("ë‚´ìš©ì„ ì…ë ¥í•˜ì„¸ìš”");
 				document.form1.boardContent.focus();
 				return;
 			}
@@ -37,27 +37,27 @@
 </script>
 </head>
 <body style="margin-left:20px">
-<h2>°Ô½Ã±Û ÀÛ¼º</h2>
+<h2>ê²Œì‹œê¸€ ì‘ì„±</h2>
 <form name="form1" method="post" action="${path}/board/insert.do">
 
 	<table class="table" style="width:800px">
 		<tr>
-			<td>Á¦¸ñ</td>
-			<td><input name="boardTitle" class="form-control"  id="boardTitle" size="80" placeholder="Á¦¸ñÀ» ÀÔ·ÂÇØ ÁÖ¼¼¿ä"></td>
+			<td>ì œëª©</td>
+			<td><input name="boardTitle" class="form-control"  id="boardTitle" size="80" placeholder="ì œëª©ì„ ì…ë ¥í•´ ì£¼ì„¸ìš”"></td>
 		</tr>
 		<tr>
-			<td>³»¿ë</td>
-			<td><textarea name="boardContent" class="form-control"  id="boardContent" rows="4" cols="80" placeholder="³»¿ëÀ» ÀÔ·ÂÇØ ÁÖ¼¼¿ä"></textarea></td>
+			<td>ë‚´ìš©</td>
+			<td><textarea name="boardContent" class="form-control"  id="boardContent" rows="4" cols="80" placeholder="ë‚´ìš©ì„ ì…ë ¥í•´ ì£¼ì„¸ìš”"></textarea></td>
 		</tr>
 		<tr>
-			<td>ÀÌ¸§</td>
+			<td>ì´ë¦„</td>
 			<td>${sessionScope.memberName}
 		</tr>
 	</table>
 	<div style="width:650px; text-align:center;">
-		<button type="button" class="btn btn-success" id="btnSave">È®ÀÎ</button>
-		<button type="reset" class="btn btn-success" >Ãë¼Ò</button>
-		<button type="button" class="btn btn-success" id="toList">¸ñ·ÏÀ¸·Î</button>
+		<button type="button" class="btn btn-success" id="btnSave">í™•ì¸</button>
+		<button type="reset" class="btn btn-success" >ì·¨ì†Œ</button>
+		<button type="button" class="btn btn-success" id="toList">ëª©ë¡ìœ¼ë¡œ</button>
 	</div>
 </form>
 </body>
