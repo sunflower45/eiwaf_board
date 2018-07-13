@@ -1,15 +1,17 @@
 package net.e4net.s1.board.vo;
 
 import lombok.Data;
+import net.e4net.eiwaf.web.util.page.PageVO;
 
 @Data
-public class ReplyVO {
+public class ReplyVO extends PageVO {
     private Integer replyRno;        // 댓글 번호
     private Integer replyBno;        // 게시글 번호
     private String replyText;    // 댓글 내용
     private String replyer;        // 댓글 작성자
     private String replyName;    // 댓글 작성자의 이름(회원의 이름)
     private String replyRegdate;        // 댓글 작성일자
+    private String rownum;
     
     // Getter/Setter
     public Integer getReplyRno() {
@@ -48,6 +50,12 @@ public class ReplyVO {
     public void setReplyRegdate(String replyRegdate) {
         this.replyRegdate = replyRegdate;
     }
+    public String getRownum() {
+		return rownum;
+	}
+    public void setRownum(String rownum) {
+		this.rownum = rownum;
+	}
     
     // toString()
     @Override

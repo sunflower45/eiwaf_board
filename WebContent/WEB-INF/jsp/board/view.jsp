@@ -1,7 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>​
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>​
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -17,9 +16,43 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script type="text/javascript">
+
+	function gfn_isNull(str) {
+	    if (str == null) return true;
+	    if (str == "NaN") return true;
+	    if (new String(str).valueOf() == "undefined") return true;   
+	    var chkStr = new String(str);
+	    if( chkStr.valueOf() == "undefined" ) return true;
+	    if (chkStr == null) return true;   
+	    if (chkStr.toString().length == 0 ) return true;  
+	    return false;
+	}
 	
+	
+	function ComSubmit(opt_formId) {
+	    this.formId = gfn_isNull(opt_formId) == true ? "commonForm" : opt_formId;
+	    this.url = "";
+	     
+	    
+	     
+	    this.setUrl = function setUrl(url){
+	        this.url = url;
+	    };
+	     
+	    this.addParam = function addParam(key, value){
+	        $("#"+this.formId).append($("<input type='hidden' name='"+key+"' id='"+key+"' value='"+value+"' >"));
+	    };
+	     
+	    this.submit = function submit(){
+	        var frm = $("#"+this.formId)[0];
+	        frm.action = this.url;
+	        frm.method = "post";
+	        frm.submit();  
+	    };
+	}
+
+
 	$(document).ready(function(){
-		
 		listReply();
 		
 		
@@ -29,8 +62,8 @@
 		
 		$("#btnDelete").click(function(){
 			if(confirm("삭제하시겠습니까?")){
-				document.form1.action="${path}/board/delete.do";
-				document.form1.submit();
+				document.commonForm.action="${path}/board/delete.do";
+				document.commonForm.submit();
 			}
 		});
 		$("#btnUpdate").click(function(){
@@ -42,6 +75,11 @@
 			location.href = "${path}/board/list.do";
 		});
 		
+		$("a[name='file']").click( function(){ //파일 이름
+			location.href="${path}/board/downloadFile.do?fileName=${dto.boardFileName}";
+        });
+
+
 		
 		
 	})
@@ -50,8 +88,8 @@
 	
 	function replyJson(){
 		
-		var f = document.form1;
-		var result = svcf_Ajax("http://localhost:8080/reply/insert.do", f, {
+		var f = document.commonForm;
+		var result = svcf_Ajax("/reply/insert.do", f, {
 			async : false,
 			procType : "R"
 		});
@@ -59,14 +97,15 @@
 	}
 	function replyJsonCallback(status, data){
 		alert('댓글이 등록되었습니다.');
-		listReply();
+		listReply("${page_no}");
 	}
 	
 	
  	function listReply(){
+ 		
 		$.ajax({
 			method : 'get',
-			url : "http://localhost:8080/reply/list.do?replyBno=${dto.boardBno}",
+			url : "/reply/list.do?replyBno=${dto.boardBno}",
 			success : function(result) {
 				$("#listReply").html(result);	
 			},
@@ -97,29 +136,33 @@
 <jsp:include page="../main/menu.jsp" ></jsp:include>
 
 <h2 >게시글 보기</h2>
-<form name="form1" method="post">
+<form name="commonForm">
+	<input type="hidden" id="replyBno" name="replyBno" value="${dto.boardBno}"/>
 	<table style="width:800px;" class="table table-striped">
 		<tr>
 			<td style="width:200px">작성일자</td>
-			<td>${dto.boardRegdate}
+			<td><c:out value="${dto.boardRegdate}"></c:out>
 			</td>
 		</tr>
 		<tr>
 			<td style="width:200px">조회수</td>
-			<td>${dto.boardViewcnt}</td>
+			<td><c:out value="${dto.boardViewcnt}"></c:out></td>
 		</tr>
 		<tr>
 			<td style="width:200px">제목</td>
-			<td>${dto.boardTitle}</td>
+			<td><c:out value="${dto.boardTitle}"></c:out></td>
 		</tr>
 		<tr>
 			<td style="width:200px">내용</td>
-			<td>${dto.boardContent}</td>
+			<td><c:out value="${dto.boardContent}"></c:out></td>
 		</tr>
-		
+		<tr>
+			<td style="width:200px">첨부파일</td>
+			<td><a href="#this" name="file">${dto.boardFileName}</a></td>
+		</tr>
 		<tr>
 			<td style="width:200px">이름</td>
-			<td> ${dto.boardWriter}</td>
+			<td><c:out value=" ${dto.boardWriter}"></c:out></td>
 		</tr>
 	</table>
 

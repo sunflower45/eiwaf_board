@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ include file="/view/layout/taglib-include.jsp"%>
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -33,15 +34,14 @@ function showReplyModify(replyRno){
 </head>
 <body>
 
-	<div id="modifyReply"></div>
 	<table class="table" style="margin-top:50px;width:700px">
 		<c:forEach var="row" items="${list}">
 		<tr>
 			<td>
-				${row.replyer} ${row.replyRegdate}
+				작성자 : <c:out value="${row.replyer}"></c:out>&nbsp;&nbsp;&nbsp;
+				작성일자 : <c:out value="${row.replyRegdate}"></c:out>
 				<br>
-				${row.replyText}
-				
+				<c:out value="${row.replyText}"></c:out>
 				<c:if test="${sessionScope.memberId==row.replyer}">
 					<div style="float:right;vertical-align:middle;">
 						<input type="button" id="btnModify" class="btn btn-default" value="수정" onclick="showReplyModify('${row.replyRno}')">
@@ -51,5 +51,6 @@ function showReplyModify(replyRno){
 		</tr>
 		</c:forEach>
 	</table>
+	
 </body>
 </html>

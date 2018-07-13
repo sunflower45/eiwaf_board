@@ -86,14 +86,14 @@
 	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
 		<property name="order" value="0"/>
 	</bean>
-<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <property name="maxUploadSize" value="100000000" />
-        <property name="maxInMemorySize" value="100000000" />
-        
-</bean>
-
-<bean id="uploadPath" class="java.lang.String">
-    <constructor-arg value="C:\Users\D169\Desktop\EIWAF\file"/>
-</bean>	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	        <property name="maxUploadSize" value="100000000" />
+	        <property name="maxInMemorySize" value="100000000" />
+	        
+	</bean>
+	
+	<bean id="uploadPath" class="java.lang.String">
+	    <constructor-arg value="C:\Users\D169\Desktop\EIWAF\file\"/>
+	</bean>	
 
 </beans>

@@ -1,42 +1,53 @@
 package net.e4net.s1.board.web;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import net.e4net.eiwaf.common.Status;
 import net.e4net.eiwaf.web.util.WebUtil;
 import net.e4net.s1.board.service.BoardService;
+import net.e4net.s1.board.service.ReplyService;
 import net.e4net.s1.board.vo.BoardPager;
 import net.e4net.s1.board.vo.BoardVO;
+import net.e4net.s1.board.vo.ReplyVO;
 import net.e4net.s1.comn.PublicController;
   
 @Controller
 @RequestMapping("/board/*")
 public class BoardController extends PublicController {
 	
-//	@Resource(name="BoardService")
 	@Autowired
 	BoardService boardService;
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
-	
+	@Autowired
+	ReplyService replyService;
 	
 	@Resource(name="uploadPath")
     String uploadPath;
@@ -77,16 +88,20 @@ public class BoardController extends PublicController {
 			return getFailModelAndView(mav, status);
 		}
 	}
+    
     @RequestMapping(value="view.do", method=RequestMethod.GET)
-    public ModelAndView view(@RequestParam int boardBno, int curPage, 
-    		String searchOption, String keyword,
+    public ModelAndView view(@RequestParam int boardBno, @ModelAttribute("rvo") ReplyVO rvo,
+    		int curPage, String searchOption, String keyword,
     		HttpSession session, HttpServletRequest request)throws Exception{
     	boardService.increaseViewcnt(boardBno, session);
     	
     	BoardVO dto = boardService.read(boardBno);
+    	
     	ModelAndView mav = new ModelAndView();
     	mav.setViewName("board/view");
     	mav.addObject("dto", dto);
+		mav.addObject("page_no", rvo.getPage_no());
+
     	Status status = WebUtil.getAttributeStatus(request);
     	if(status.isOk()) {
     		return getOkModelAndView(mav, status);
@@ -94,6 +109,8 @@ public class BoardController extends PublicController {
     		return getFailModelAndView(mav, status);
     	}
     }
+    
+    
     @RequestMapping(value="write.do", method=RequestMethod.GET)
     public ModelAndView write(HttpServletRequest request) throws Exception{
     	ModelAndView mav = new ModelAndView();
@@ -143,8 +160,10 @@ public class BoardController extends PublicController {
     	vo.setBoardWriter(writer);
     	vo.setBoardContent(boardContent);
     	vo.setBoardTitle(boardTitle);
-    	
+    	vo.setBoardFileName(savedName);
+    	vo.setBoardFileSize(file.getSize());
     	boardService.create(vo, request);
+    	
     	Status status = WebUtil.getAttributeStatus(request);
     	if(status.isOk()) {
     		return getOkModelAndView(mav, status);
@@ -153,8 +172,29 @@ public class BoardController extends PublicController {
     	}
     }
     
+    @ResponseBody
+    @RequestMapping(value="downloadFile.do")
+    public ResponseEntity<byte[]> downloadFile(@RequestParam String fileName, HttpServletResponse response) throws Exception {
+    	InputStream in = null;
+    	ResponseEntity<byte[]> entity = null;
+    	System.out.println(fileName);
+    	try {
+    		in = new FileInputStream(uploadPath + fileName);
+    		fileName = fileName.substring(fileName.indexOf("_")+1);
+    		HttpHeaders headers = new HttpHeaders();
+    		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+    		headers.add("Content-Disposition", "attachment; filename=\""+new String(fileName.getBytes("utf-8"), "iso-8859-1")+"\"");
+    		entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.OK);
+    	} catch(Exception e) {
+    		e.printStackTrace();
+    		entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
+    	}finally {
+    		in.close();
+    	}
+    	System.out.println("entity : "+entity);
+    	return entity;
+    }
     
-
     @RequestMapping(value="update.do", method=RequestMethod.POST)
     public ModelAndView update(@ModelAttribute BoardVO vo) throws Exception{
     	boardService.update(vo);

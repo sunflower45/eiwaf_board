@@ -15,6 +15,7 @@ public class ReplyService extends TestService{
 	
 	@SuppressWarnings("unchecked")
 	public List<ReplyVO> list(int replyBno){
+		
 		SqlSession = null;
 		try {
 			SqlSession = openSession(true);

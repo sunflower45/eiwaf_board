@@ -12,8 +12,22 @@ public class BoardVO {
     private String boardRegdate;     // 게시글 작성일자 util.Date
     private int boardViewcnt;        // 게시글 조회수
     private int boardReplyCnt;
+    private String boardFileName;
+    private long boardFileSize;
     
-
+    public void setBoardFileName(String boardFileName) {
+		this.boardFileName = boardFileName;
+	}
+    public String getBoardFileName() {
+		return boardFileName;
+	}
+    
+    public void setBoardFileSize(long boardFileSize) {
+		this.boardFileSize = boardFileSize;
+	}
+    public long getBoardFileSize() {
+		return boardFileSize;
+	}
     
     public int getBoardReplyCnt() {
 		return boardReplyCnt;

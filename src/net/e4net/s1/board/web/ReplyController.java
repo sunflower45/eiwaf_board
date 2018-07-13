@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import net.e4net.eiwaf.common.Status;
+import net.e4net.eiwaf.web.RequestContext;
 import net.e4net.eiwaf.web.util.WebUtil;
+import net.e4net.eiwaf.web.util.page.PageNavigator;
 import net.e4net.s1.board.service.ReplyService;
 import net.e4net.s1.board.vo.BoardVO;
 import net.e4net.s1.board.vo.MemberVO;
@@ -37,10 +39,13 @@ public class ReplyController extends PublicController {
     	
 	}
 	
-	@RequestMapping(value="list.do", method=RequestMethod.GET)
-	public ModelAndView list(@RequestParam int replyBno, HttpServletRequest request) {
+	@RequestMapping(value="list.do")
+	public ModelAndView list(@RequestParam int replyBno, 
+			HttpServletRequest request, RequestContext requestContext) {
 		ModelAndView mav = new ModelAndView();
+				
 		List<ReplyVO> list = replyService.list(replyBno);
+		System.out.println("list : "+list);
 		mav.setViewName("board/replyList");
 		mav.addObject("list", list);
     	Status status = WebUtil.getAttributeStatus(request);
@@ -51,12 +56,6 @@ public class ReplyController extends PublicController {
     	}
 	}
 	
-	@RequestMapping("listJson.do")
-	@ResponseBody
-	public List<ReplyVO> listJson(@RequestParam int replyBno, HttpServletRequest request) {
-		List<ReplyVO> list = replyService.list(replyBno);
-		return list;
-	}
 	
 	@RequestMapping(value="detail.do", method=RequestMethod.GET)
 	public ModelAndView replyDetail(@RequestParam  int replyRno, HttpServletRequest request) {

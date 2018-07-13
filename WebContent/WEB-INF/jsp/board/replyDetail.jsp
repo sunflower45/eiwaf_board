@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="EUC-KR"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -17,7 +17,7 @@ $("#btnReplyUpdate").click(function(){
 function replyUpdate(){
 	
 	var f = document.form1;
-	var result = svcf_Ajax("http://localhost:8080/reply/update.do", f, {
+	var result = svcf_Ajax("/reply/update.do", f, {
 		async:false,
 		procType : "R"
 	});
@@ -29,13 +29,13 @@ function replyUpdateCallback(status, data){
 	listReply();
 }
 $("#btnReplyDelete").click(function(){
-	if(confirm("ì‚­ì œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?")){
+	if(confirm("»èÁ¦ÇÏ½Ã°Ú½À´Ï±î?")){
 		$.ajax({
 			method : 'delete',
-			url : "http://localhost:8080/reply/delete.do?replyRno=${vo.replyRno}",
+			url : "/reply/delete.do?replyRno=${vo.replyRno}",
 			success : function(result){
 				console.log(result);
-				alert("ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤.");
+				alert("»èÁ¦µÇ¾ú½À´Ï´Ù.");
 				$("#modifyReply").css("visibility", "hidden");
 				listReply();
 			},
@@ -53,7 +53,7 @@ $("#btnReplyClose").click(function(){
 </script>
 </head>
 <body>
-ëŒ“ê¸€ ë²ˆí˜¸ : ${vo.replyRno }<br>
+´ñ±Û ¹øÈ£ : ${vo.replyRno }<br>
 <form name="form1">
 <textarea style="width:400px" class="form-control" id="replyText" name="replyText" rows="5" cols="82">
 	${vo.replyText}
@@ -61,11 +61,11 @@ $("#btnReplyClose").click(function(){
 <input type="hidden" name="replyRno" id = "replyRno" value="${vo.replyRno}">
 <div>
 	<c:if test="${sessionScope.memberId == vo.replyer }">
-		<button style="margin-top:10px" class="btn btn-success btn-xs" type="button" id="btnReplyUpdate">ìˆ˜ì •</button>
-		<button style="margin-top:10px"  class="btn btn-success btn-xs"type="button" id="btnReplyDelete">ì‚­ì œ</button>
+		<button style="margin-top:10px" class="btn btn-success btn-xs" type="button" id="btnReplyUpdate">¼öÁ¤</button>
+		<button style="margin-top:10px"  class="btn btn-success btn-xs"type="button" id="btnReplyDelete">»èÁ¦</button>
 
 	</c:if>
-	<button style="margin-top:10px"  class="btn btn-success btn-xs" type="button" id="btnReplyClose">ë‹«ê¸°</button>
+	<button style="margin-top:10px"  class="btn btn-success btn-xs" type="button" id="btnReplyClose">´İ±â</button>
 </div>
 </form>
 </body>

@@ -20,6 +20,7 @@ import net.e4net.eiwaf.common.Status;
 import net.e4net.eiwaf.web.util.WebUtil;
 import net.e4net.s1.board.service.MemberService;
 import net.e4net.s1.board.vo.MemberVO;
+import net.e4net.s1.board.vo.ReplyVO;
 import net.e4net.s1.comn.PublicController;
 
 @Controller
@@ -121,7 +122,7 @@ public class MemberController extends PublicController {
 		
 		String idList = memberService.idCheck(vo);
 		mav.addObject("cnt", idList);
-		
+		mav.addObject("memberId", vo.getMemberId());
 		
 		return getOkModelAndView(mav);
 		
@@ -148,6 +149,7 @@ public class MemberController extends PublicController {
 			mav.addObject("memberId", idList);
 			return getOkModelAndView(mav);
 	}
+	
 	@RequestMapping(value="findPw.do", method=RequestMethod.POST)
 	public ModelAndView findPw(@ModelAttribute("vo") MemberVO vo) throws Exception{
 		ModelAndView mav = new ModelAndView("jsonView");
@@ -161,6 +163,7 @@ public class MemberController extends PublicController {
 		}
 		
 	}
+	
 	@RequestMapping("loginCheck.do")
 	public ModelAndView loginCheck(@ModelAttribute MemberVO vo, HttpSession session, HttpServletRequest request) throws Exception {
 		String name = memberService.loginCheck(vo, session);
@@ -198,10 +201,10 @@ public class MemberController extends PublicController {
 	}
 	
 	@RequestMapping(value="joinUpdate.do", method=RequestMethod.POST)
-	public ModelAndView joinUpdate(@ModelAttribute MemberVO vo, HttpServletRequest request) throws Exception{
+	public ModelAndView joinUpdate(@ModelAttribute("vo") MemberVO vo, HttpServletRequest request) throws Exception{
 		memberService.joinUpdate(vo);
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("main/main");
+		mav.setViewName("jsonView");
 		Status status = WebUtil.getAttributeStatus(request);
 		if (status.isOk()) {
 			return getOkModelAndView(mav, status);

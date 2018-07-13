@@ -23,8 +23,8 @@
    	 	<include refid="search"></include>
 	</select>
 	<insert id="insert">
-		INSERT INTO tbl_board(board_bno, board_title, board_content, board_writer)
-		VALUES(BOARD_NUM.NEXTVAL, #{boardTitle},#{boardContent}, #{boardWriter})
+		INSERT INTO tbl_board(board_bno, board_title, board_content, board_writer, board_file_name, board_file_size)
+		VALUES(BOARD_NUM.NEXTVAL, #{boardTitle},#{boardContent}, #{boardWriter}, #{boardFileName}, #{boardFileSize})
 	</insert>
 	<select id="view" resultType="net.e4net.s1.board.vo.BoardVO">
 		SELECT BOARD_BNO as boardBno
@@ -33,6 +33,7 @@
 				, BOARD_WRITER as boardWriter
 				, BOARD_REGDATE as boardRegdate
 				, BOARD_VIEWCNT  as boardViewcnt
+				, BOARD_FILE_NAME as boardFileName
 		FROM tbl_board
 		WHERE board_bno = #{boardBno}
 	</select>
