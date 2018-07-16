@@ -16,11 +16,12 @@
 <body style="margin-top:10px;margin-left:20px">
 <jsp:include page="../main/menu.jsp" ></jsp:include>
 <h2 style="margin-left:190px">회원 등록</h2>
+
 <form name="form1" method="post" action="${path}/member/insert.do">
 <table class="table" style="margin-left:20px;width:500px">
 	<tr>
 		<td>아이디</td>
-		<td><input name="memberId"></td>
+		<td><input  name="memberId"></td>
 	</tr>
 	<tr>
 		<td>비밀번호</td>

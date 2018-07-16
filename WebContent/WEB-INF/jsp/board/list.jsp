@@ -20,6 +20,13 @@
     function list(page){
     	location.href="${path}/board/list.do?curPage="+page+"&searchOption=${map.searchOption}&keyword=${map.keyword}";
     }
+    $(document).ready(function() {
+        $('#keyword').on('keyup', function() {
+            if($(this).val().length > 255) {
+                $(this).val($(this).val().substring(0, 255));
+            }
+        });
+    });
 </script>
 </head>
 <body style="margin-top:10px;margin-left:20px">
@@ -65,16 +72,16 @@
 		</tr>
 		<c:forEach var="row" items="${map.list}">
 			<tr>
-				<td>${row.boardBno}</td>
+				<td><c:out value="${row.boardBno}"></c:out></td>
 				<td><a href="${path}/board/view.do?boardBno=${row.boardBno}&curPage=${map.boardPager.curPage}&searchOption=${map.searchOption}&keyword=${map.keyword}">${row.boardTitle}
 				<c:if test="${row.boardReplyCnt > 0}">
-					<span style="color:red;">(${row.boardReplyCnt})</span>
+					<span style="color:red;"><c:out value="${row.boardReplyCnt}"></c:out></span>
 				</c:if>
 				</a>
 				</td>
-				<td>${row.boardWriter}</td>
-				<td>${row.boardRegdate}</td>
-				<td>${row.boardViewcnt}</td>
+				<td><c:out value="${row.boardWriter}"></c:out></td>
+				<td><c:out value="${row.boardRegdate}"></c:out></td>
+				<td><c:out value="${row.boardViewcnt}"></c:out></td>
 			</tr>
 		</c:forEach>
 		<tr>

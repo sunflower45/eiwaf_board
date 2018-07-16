@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+        <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -23,18 +25,67 @@ $(document).ready(function(){
 	$("#toList").click(function(){
 		location.href="${path}/member/admin.do";
 	})
+	
 })
+
+$(document).ready(function(){
+	$("#btnUpdate").click(function(){
+		if($("#memberPw").val() == ""){
+			alert("비밀번호 입력은 필수 사항입니다.");
+			return false;
+		}
+		if($("#memberName").val() == ""){
+			alert("이름 입력은 필수 사항입니다.");
+			return false;
+		}
+		if($("#memberEmail").val() == ""){
+			alert("이메일 주소 입력은 필수 사항입니다.");
+			return false;
+		}
+		var pattern=/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+		if(pattern.test($("#memberEmail").val()) == false ){
+			alert("잘못된 이메일 형식입니다.");
+			return false;
+		}
+		document.form1.action="${path}/member/update.do";
+		document.form1.submit();
+	})
+})
+$(document).ready(function() {
+    $('#memberPw').on('keyup', function() {
+        if($(this).val().length > 50) {
+            $(this).val($(this).val().substring(0, 50));
+        }
+    });
+});
+$(document).ready(function() {
+    $('#memberName').on('keyup', function() {
+        if($(this).val().length > 10) {
+            $(this).val($(this).val().substring(0, 10));
+        }
+    });
+});
+$(document).ready(function() {
+    $('#memberEmail').on('keyup', function() {
+        if($(this).val().length > 100) {
+            $(this).val($(this).val().substring(0, 100));
+        }
+    });
+});
 </script>
 <title>회원 정보 수정</title>
 </head >
 <body style="margin-top:10px;margin-left:20px">
 <jsp:include page="../main/menu.jsp" ></jsp:include>
 <h2 style="margin-left:150px">회원 정보 수정</h2>
-<form name="from1" method="post" action="${path}/member/update.do">
+<form name="from1" method="post">
 	<table class="table" style="width:500px">
 		<tr>
 			<td>아이디</td>
-			<td><input name="memberId" value="${dto.memberId}" readonly="readonly"></td>
+			<td>
+				<input type="hidden" id="memberId" value="${dto.memberId}">
+				<c:out value="${dto.memberId}"></c:out>
+			</td>
 		</tr>
 		<tr>
 			<td>비밀번호</td>
@@ -42,15 +93,18 @@ $(document).ready(function(){
 		</tr>
 		<tr>
 			<td>이름</td>
-			<td><input name="memberName" value="${dto.memberName }"></td>
+			<td><input name="memberName" id="memberName" value="${dto.memberName }"></td>
 		</tr>
 		<tr>
 			<td>이메일 주소</td>
-			<td><input name="memberEmail" value="${dto.memberEmail}"></td>
+			<td><input name="memberEmail" id="memberEmail" value="${dto.memberEmail}"></td>
 		</tr>
 		<tr>
 			<td>회원가입일자</td>
-			<td><input value="${dto.memberRegdate}" readonly="readonly"></td>
+			<td>
+				<input type="hidden" id="memberRegdate" value="${dto.memberRegdate}">
+				<c:out value="${dto.memberRegdate}"></c:out>
+			</td>
 		</tr>
 		<tr>
 			<td colspan="2" align="center">

@@ -43,6 +43,20 @@ $(document).ready(function(){
 		location.href="${path}/member/admin.do";
 	})
 });
+$(document).ready(function() {
+    $('#memberId').on('keyup', function() {
+        if($(this).val().length > 30) {
+            $(this).val($(this).val().substring(0, 30));
+        }
+    });
+});
+$(document).ready(function() {
+    $('#memberPw').on('keyup', function() {
+        if($(this).val().length > 50) {
+            $(this).val($(this).val().substring(0, 50));
+        }
+    });
+});
 </script>
 <title>메인 페이지</title>
 </head>

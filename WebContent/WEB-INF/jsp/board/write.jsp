@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,28 +14,43 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 <script>
-	$(document).ready(function(){
-		$("#btnSave").click(function(){
-			var title = $("#boardTitle").val();
-			var content = $("#boardContent").val();
-			var writer = $("#boardWriter").val();
-			if(title == ""){
-				alert("제목을 입력하세요");
-				document.form1.boardTitle.focus();
-				return;
-			}
-			if(content == ""){
-				alert("내용을 입력하세요");
-				document.form1.boardContent.focus();
-				return;
-			}
-			document.form1.submit();
-		});
-		$("#toList").click(function(){
-            location.href = "${path}/board/list.do";
+$(document).ready(function(){
+	$("#btnSave").click(function(){
+		var title = $("#boardTitle").val();
+		var content = $("#boardContent").val();
+		var writer = $("#boardWriter").val();
+		if(title == ""){
+			alert("제목을 입력하세요");
+			document.form1.boardTitle.focus();
+			return;
+		}
+		if(content == ""){
+			alert("내용을 입력하세요");
+			document.form1.boardContent.focus();
+			return;
+		}
+		document.form1.submit();
+	});
+	$("#toList").click(function(){
+           location.href = "${path}/board/list.do";
 
-		});
-	})
+	});
+})
+	
+$(document).ready(function() {
+    $('#boardTitle').on('keyup', function() {
+        if($(this).val().length > 1000) {
+            $(this).val($(this).val().substring(0, 1000));
+        }
+    });
+});
+$(document).ready(function() {
+    $('#boardContent').on('keyup', function() {
+        if($(this).val().length > 1000) {
+            $(this).val($(this).val().substring(0, 1000));
+        }
+    });
+});
 </script>
 </head>
 <body style="margin-left:20px">
@@ -57,7 +74,7 @@
 		</tr>
 		<tr>
 			<td>이름</td>
-			<td>${sessionScope.memberName}
+			<td><c:out value="${sessionScope.memberName}"></c:out>
 		</tr>
 	</table>
 	<div style="width:650px; text-align:center;">

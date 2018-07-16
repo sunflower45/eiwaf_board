@@ -24,7 +24,12 @@ $(document).on('click', '#toLogin', function(){
 
 })
 $(document).on('click','#findId',function(){
-
+	var pattern=/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+	if(pattern.test($("#memberEmail").val())==false){
+		alert("이메일 형식이 틀립니다.");
+		return false;
+	}
+	
 	var f = document.form1;
 	var result = svcf_Ajax("http://localhost:8080/member/findId.do", f, {
 		async : false,
@@ -39,7 +44,13 @@ function idFindActionCallback(status, data){
 
 }
 $(document).on('click','#findPw',function(){
+	var pattern = /[^(a-zA-Z0-9)]/;
+	var memberId = $("#memberId").val();
 	
+	if(pattern.test(memberId)){
+		alert("아이디는 영문만 허용합니다.");
+		return false;
+	} 
 	var f = document.form2;
 	
 	var result = svcf_Ajax("http://localhost:8080/member/findPw.do", f, {
@@ -56,6 +67,35 @@ function pwFindActionCallback(status, data){
 	alert("회원님의 정보로 등록된 아이디는 : "+data.memberPw+" 입니다.");
 
 }
+
+$(document).ready(function() {
+    $('#memberName1').on('keyup', function() {
+        if($(this).val().length > 10) {
+            $(this).val($(this).val().substring(0, 10));
+        }
+    });
+});
+$(document).ready(function() {
+    $('#memberName2').on('keyup', function() {
+        if($(this).val().length > 10) {
+            $(this).val($(this).val().substring(0, 10));
+        }
+    });
+});
+$(document).ready(function() {
+    $('#memberEmail').on('keyup', function() {
+        if($(this).val().length > 100) {
+            $(this).val($(this).val().substring(0, 100));
+        }
+    });
+});
+$(document).ready(function() {
+    $('#memberId').on('keyup', function() {
+        if($(this).val().length > 30) {
+            $(this).val($(this).val().substring(0, 30));
+        }
+    });
+});
 </script>
 </head>
 <body>

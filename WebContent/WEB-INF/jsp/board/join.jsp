@@ -51,10 +51,8 @@ $(document).ready(function () {
 
 });
 
-
 $(document).on('click', '#idCheck', function(){
 	  	var f = document.form1;
-    	console.log(f);
     	var result = svcf_Ajax("/member/idCheck.do", f, {
     		async : false,
     		procType : "R"
@@ -67,7 +65,7 @@ $(document).on('click', '#idCheck', function(){
 
 function chkIdCallback(status, data){
 	
-	var pattern = /[^(a-zA-Z)]/;
+	var pattern = /[^(a-zA-Z0-9)]/;
 	
 	if(data.cnt =="1"){
 		alert("아이디가 존재합니다. 다른 아이디를 입력해주세요.");
@@ -88,6 +86,31 @@ function chkIdCallback(status, data){
 
 
 $(document).on('click', '#submitBtn', function(){
+	if($("#memberId").val() == ''){
+		alert('아이디는 필수 입력 사항입니다.');
+		return false;
+	}
+	if($("#memberPw").val() == ''){
+		alert('비밀번호는 필수 입력 사항입니다.');
+		return false;
+	}
+	if($("#memberPwCheck").val() == ''){
+		alert('비밀번호확인은 필수 입력 사항입니다.');
+		return false;
+	}
+	if($("#memberName").val() == ''){
+		alert('이름은 필수 입력 사항입니다.');
+		return false;
+	}
+	if($("#memberEmail").val() == ''){
+		alert('이메일은 필수 입력 사항입니다.');
+		return false;
+	}
+	var pattern=/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+	if(pattern.test($("#memberEmail").val()) == false ){
+		alert("잘못된 이메일 형식입니다.");
+		return false;
+	}
 	if(pw_validate == false || id_validate == false){
 		alert("폼을 제대로 입력해주세요");
 		return false;
@@ -106,6 +129,43 @@ function joinUpdateCallback(status, data){
 	alert("가입이 완료되었습니다.");
 	location.href="/main.do";
 }
+
+$(document).ready(function() {
+    $('#memberId').on('keyup', function() {
+        if($(this).val().length > 30) {
+            $(this).val($(this).val().substring(0, 30));
+        }
+    });
+});
+$(document).ready(function() {
+    $('#memberPw').on('keyup', function() {
+        if($(this).val().length > 50) {
+            $(this).val($(this).val().substring(0, 50));
+        }
+    });
+});
+$(document).ready(function() {
+    $('#memberPwCheck').on('keyup', function() {
+        if($(this).val().length > 50) {
+            $(this).val($(this).val().substring(0, 50));
+        }
+    });
+});
+$(document).ready(function() {
+    $('#memberName').on('keyup', function() {
+        if($(this).val().length > 10) {
+            $(this).val($(this).val().substring(0, 10));
+        }
+    });
+});
+$(document).ready(function() {
+    $('#memberEmail').on('keyup', function() {
+        if($(this).val().length > 100) {
+            $(this).val($(this).val().substring(0, 100));
+        }
+    });
+});
+
 </script>
 </head>
 <body>
@@ -113,19 +173,19 @@ function joinUpdateCallback(status, data){
   <form id="form1" name="form1"  method="post">
 	<table class="table" style="margin-left:10px;width:800px;">
 		<tr>
-			<td>아이디</td>
+			<td>아이디(*)</td>
 			<td><input class="form-control" type="text" id="memberId" name="memberId">
-			<button id="idCheck"class="btn btn-default"  style="margin-top:10px;" type="button">아이디 중복 검사</button>
+			<button id="idCheck"class="btn btn-default" style="margin-top:10px;" type="button">아이디 중복 검사</button>
 			</td>
 			
 		</tr>
 		<tr>
-			<td>비밀번호</td>
+			<td>비밀번호(*)</td>
 			<td><input  class="form-control"  type="password"  id="memberPw" name="memberPw"></td>
 		</tr>
 		
 		<tr>
-			<td>비밀번호 확인 &nbsp;</td>
+			<td>비밀번호 확인(*) &nbsp;</td>
 			<td><input  class="form-control"  type="password" id="memberPwCheck" name="memberPwCheck">
 			<div style="margin-top:10px" id="lblError">
 				
@@ -134,12 +194,13 @@ function joinUpdateCallback(status, data){
 			
 		</tr>
 		<tr>
-			<td>이름</td>
+			<td>이름(*)</td>
 			<td><input class="form-control"  type="text"  id="memberName" name="memberName"></td>
 		</tr>
 		<tr>
-			<td>이메일</td>
+			<td>이메일(*)</td>
 			<td><input class="form-control"  type="text" name="memberEmail" id="memberEmail"></td>
+			
 		</tr>
 		
 		<tr>

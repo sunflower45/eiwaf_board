@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+        <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -77,7 +79,7 @@
 	</tr>
 	<tr>
 		<td>이름</td>
-		<td>${dto.boardWriter}</td>
+		<td><c:out value="${dto.boardWriter}"></c:out><input type="hidden" id="boardWriter" name="boardWriter" value="${dto.boardWriter}"></td>
 	</tr>
 </table>
 	<div>

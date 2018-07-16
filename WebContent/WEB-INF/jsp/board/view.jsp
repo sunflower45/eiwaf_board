@@ -129,6 +129,7 @@
         strDate = year+"-"+month+"-"+day+" "+hour+":"+minute+":"+second;
         return strDate;
     }
+    
 </script>
 
 </head>
